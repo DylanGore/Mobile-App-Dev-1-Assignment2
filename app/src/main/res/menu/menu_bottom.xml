@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_locations"
+        android:icon="@drawable/ic_location_city"
+        android:title="@string/title_locations" />
+    <item
+        android:id="@+id/nav_observation_stations"
+        android:icon="@drawable/ic_cloud"
+        android:title="@string/title_observation_stations" />
+</menu>
