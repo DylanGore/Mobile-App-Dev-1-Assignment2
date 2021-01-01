@@ -15,6 +15,7 @@ class AddLocationActivity : AppCompatActivity() {
 
     private lateinit var app: MainApp;
     private lateinit var binding: ActivityAddLocationBinding
+    private var location = Location()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +23,17 @@ class AddLocationActivity : AppCompatActivity() {
         binding = ActivityAddLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra("location_edit")) {
+            location = intent.extras?.getParcelable<Location>("location_edit")!!
+            binding.addLocationName.setText(location.name)
+            binding.addLocationLatitude.setText(location.latitude.toString())
+            binding.addLocationLongitude.setText(location.longitude.toString())
+            binding.addLocationAltitude.setText(location.altitude.toString())
+        }
+
         binding.button.setOnClickListener {
 
             //TODO validation
-            val location = Location()
             location.id = app.locations.last().id + 1
             location.name = binding.addLocationName.text.toString()
             location.latitude = binding.addLocationLatitude.text.toString().toDouble()

@@ -15,8 +15,9 @@ import ie.dylangore.mad1.assignment2.databinding.FragmentLocationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Location
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.intentFor
 
-class LocationsFragment : Fragment(), AnkoLogger {
+class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
 
     lateinit var app: MainApp;
     private var _binding: FragmentLocationsBinding? = null
@@ -39,7 +40,7 @@ class LocationsFragment : Fragment(), AnkoLogger {
         // FAB
         binding.fabAddLocation.setOnClickListener {
             val intent = Intent(this.activity, AddLocationActivity::class.java)
-            this.activity?.startActivityForResult(intent, 0)
+            activity?.startActivityForResult(intent, 0)
         }
 
         // Inflate the layout for this fragment
@@ -57,7 +58,7 @@ class LocationsFragment : Fragment(), AnkoLogger {
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = LocationAdapter(app.locations)
+        recyclerView.adapter = LocationAdapter(app.locations, this)
 
         // Display a TextView if the list is empty
         if (app.locations.isNotEmpty()){
@@ -74,10 +75,18 @@ class LocationsFragment : Fragment(), AnkoLogger {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onLocationClick(location: Location) {
+        activity?.startActivityForResult(activity?.intentFor<AddLocationActivity>()?.putExtra("location_edit", location), 0)
+    }
 }
 
-private class LocationAdapter(private var locations: ArrayList<Location>) : RecyclerView.Adapter<LocationAdapter.MainHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationAdapter.MainHolder {
+interface LocationListener {
+    fun onLocationClick(location: Location)
+}
+
+private class LocationAdapter(private var locations: ArrayList<Location>, private val listener: LocationListener) : RecyclerView.Adapter<LocationAdapter.MainHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(
             R.layout.list_card,
             parent,
@@ -87,13 +96,14 @@ private class LocationAdapter(private var locations: ArrayList<Location>) : Recy
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val location = locations[holder.adapterPosition]
-        holder.bind(location)
+        holder.bind(location, listener)
     }
 
     override fun getItemCount(): Int = locations.size
 
     private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(location: Location){
+        fun bind(location: Location, listener: LocationListener){
+            itemView.setOnClickListener { listener.onLocationClick(location) }
             val cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
             cardTitle.text = location.name
         }
