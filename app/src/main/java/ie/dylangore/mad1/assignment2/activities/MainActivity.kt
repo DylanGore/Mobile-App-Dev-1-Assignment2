@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         val navController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.nav_locations,
-            R.id.nav_observation_stations
+            R.id.nav_observation_stations,
+            R.id.nav_warnings
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

@@ -2,4 +2,6 @@
     <string name="app_name">Weather</string>
     <string name="title_locations">Locations</string>
     <string name="title_observation_stations">Observation Stations</string>
+    <string name="title_warnings">Weather Warnings</string>
+    <string name="list_card_title_dummy">Item Name</string>
 </resources>

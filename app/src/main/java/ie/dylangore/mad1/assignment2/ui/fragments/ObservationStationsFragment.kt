@@ -31,7 +31,7 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
 
         val root : FrameLayout = inflater.inflate(R.layout.fragment_observation_stations, container, false) as FrameLayout
         val layoutManager = LinearLayoutManager(this.context)
-        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view)
+        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view_observation_stations)
 
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = StationAdapter(app.stations)
@@ -41,10 +41,10 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
     }
 }
 
-class StationAdapter(private var stations: ArrayList<ObservationStation.ObservationStationItem>) : RecyclerView.Adapter<StationAdapter.MainHolder>() {
+private class StationAdapter(private var stations: ArrayList<ObservationStation.ObservationStationItem>) : RecyclerView.Adapter<StationAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationAdapter.MainHolder {
-        return MainHolder(LayoutInflater.from(parent?.context).inflate(
-                R.layout.card_station,
+        return MainHolder(LayoutInflater.from(parent.context).inflate(
+                R.layout.list_card,
                 parent,
                 false
         ))
@@ -57,10 +57,10 @@ class StationAdapter(private var stations: ArrayList<ObservationStation.Observat
 
     override fun getItemCount(): Int = stations.size
 
-    class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(station: ObservationStation.ObservationStationItem){
-            var stationTitle : TextView = itemView.findViewById(R.id.station_title)
-            stationTitle.text = station.location
+            var cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
+            cardTitle.text = station.location
         }
     }
 }

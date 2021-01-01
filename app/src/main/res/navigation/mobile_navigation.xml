@@ -15,4 +15,8 @@
         android:name="ie.dylangore.mad1.assignment2.ui.fragments.ObservationStationsFragment"
         android:label="@string/title_observation_stations"
         tools:layout="@layout/fragment_observation_stations" />
+    <fragment
+        android:id="@+id/nav_warnings"
+        android:name="ie.dylangore.mad1.assignment2.ui.fragments.WarningsFragment"
+        android:label="@string/title_warnings" />
 </navigation>

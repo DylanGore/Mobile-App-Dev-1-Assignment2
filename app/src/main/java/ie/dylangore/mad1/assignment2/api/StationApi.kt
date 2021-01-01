@@ -1,4 +1,4 @@
-package ie.dylangore.mad1.assignment2.api.station
+package ie.dylangore.mad1.assignment2.api
 
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import retrofit2.Call
