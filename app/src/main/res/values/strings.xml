@@ -6,4 +6,5 @@
     <string name="list_card_title_dummy">Item Name</string>
     <string name="empty_text_warnings">No weather warnings</string>
     <string name="empty_text_observation_stations">Could not find any observation stations!</string>
+    <string name="empty_text_locations">No saved locations</string>
 </resources>
