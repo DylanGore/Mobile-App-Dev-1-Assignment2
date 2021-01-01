@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,21 +30,16 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentObservationStationsBinding.inflate(inflater, container, false)
 
-        val recyclerView = binding.recyclerViewObservationStations
-        val emptyLayout = binding.layoutEmptyObservationStations
+        updateStations()
 
-        // Setup the RecyclerView and Adapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = StationAdapter(app.stations)
-
-        // Display a TextView if the list is empty
-        if (app.stations.isNotEmpty()){
-            emptyLayout.visibility = View.INVISIBLE
-        }else{
-            emptyLayout.visibility = View.VISIBLE
+        // Swipe to refresh
+        binding.layoutStationsRefresh.setOnRefreshListener {
+            updateStations()
+            binding.layoutStationsRefresh.isRefreshing = false
+            Toast.makeText(this.context,"Refreshed Station List", Toast.LENGTH_SHORT).show()
         }
 
         // Inflate the layout for this fragment
@@ -57,10 +53,26 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun updateStations(){
+        val recyclerView = binding.recyclerViewObservationStations
+        val emptyLayout = binding.layoutEmptyObservationStations
+
+        // Setup the RecyclerView and Adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = StationAdapter(app.stations)
+
+        // Display a TextView if the list is empty
+        if (app.stations.isNotEmpty()){
+            emptyLayout.visibility = View.INVISIBLE
+        }else{
+            emptyLayout.visibility = View.VISIBLE
+        }
+    }
 }
 
 private class StationAdapter(private var stations: ArrayList<ObservationStation.ObservationStationItem>) : RecyclerView.Adapter<StationAdapter.MainHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationAdapter.MainHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(
                 R.layout.list_card,
                 parent,

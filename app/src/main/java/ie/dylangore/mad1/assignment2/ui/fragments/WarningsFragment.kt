@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +13,12 @@ import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.FragmentWarningsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Warning
+import okhttp3.internal.wait
 import org.jetbrains.anko.AnkoLogger
 
 class WarningsFragment : Fragment(), AnkoLogger {
 
-    lateinit var app: MainApp;
+    lateinit var app: MainApp
     private var _binding: FragmentWarningsBinding? = null
     private val binding get() = _binding!!
 
@@ -29,21 +31,17 @@ class WarningsFragment : Fragment(), AnkoLogger {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentWarningsBinding.inflate(inflater, container, false)
 
-        val recyclerView = binding.recyclerViewWarnings
-        val emptyLayout = binding.layoutEmptyWarnings
+        updateWarnings()
 
-        // Setup the RecyclerView and Adapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = WarningAdapter(app.warnings)
-
-        // Display a TextView if the list is empty
-        if (app.warnings.isNotEmpty()){
-            emptyLayout.visibility = View.INVISIBLE
-        }else{
-            emptyLayout.visibility = View.VISIBLE
+        // Swipe to refresh
+        binding.layoutWarningsRefresh.setOnRefreshListener {
+            updateWarnings()
+            binding.layoutWarningsRefresh.isRefreshing = false
+            Toast.makeText(this.context,"Refreshed Warning List", Toast.LENGTH_SHORT).show()
+            binding.recyclerViewWarnings.adapter?.notifyDataSetChanged()
         }
 
         // Inflate the layout for this fragment
@@ -57,10 +55,26 @@ class WarningsFragment : Fragment(), AnkoLogger {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun updateWarnings(){
+        val recyclerView = binding.recyclerViewWarnings
+        val emptyLayout = binding.layoutEmptyWarnings
+
+        // Setup the RecyclerView and Adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = WarningAdapter(app.warnings)
+
+        // Display a TextView if the list is empty
+        if (app.warnings.isNotEmpty()){
+            emptyLayout.visibility = View.INVISIBLE
+        }else{
+            emptyLayout.visibility = View.VISIBLE
+        }
+    }
 }
 
 private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem>) : RecyclerView.Adapter<WarningAdapter.MainHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WarningAdapter.MainHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(
                 R.layout.list_card,
                 parent,

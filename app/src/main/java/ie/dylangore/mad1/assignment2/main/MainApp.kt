@@ -18,8 +18,16 @@ class MainApp : Application(), AnkoLogger {
     override fun onCreate() {
         super.onCreate()
         info("App has started!")
-        stations = RequestHelper.getMetEireannStations()
-        warnings = RequestHelper.getWeatherWarnings()
+        updateStations()
+        updateWarnings()
         locations.add(Location(1, "test"))
+    }
+
+    private fun updateStations() {
+        stations = RequestHelper.getMetEireannStations()
+    }
+
+    private fun updateWarnings() {
+        warnings = RequestHelper.getWeatherWarnings()
     }
 }
