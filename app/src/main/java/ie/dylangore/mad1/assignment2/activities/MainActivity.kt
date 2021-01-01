@@ -1,5 +1,9 @@
 package ie.dylangore.mad1.assignment2.activities
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -9,10 +13,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import ie.dylangore.mad1.assignment2.R
-import ie.dylangore.mad1.assignment2.databinding.ActivityAddLocationBinding
 import ie.dylangore.mad1.assignment2.databinding.ActivityMainBinding
 import ie.dylangore.mad1.assignment2.helpers.NetworkHelper
+import ie.dylangore.mad1.assignment2.models.Warning
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * The first activity shown to the user
@@ -43,5 +48,4 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             Snackbar.make(navView, "No network connection!", Snackbar.LENGTH_LONG).show()
         }
     }
-
 }

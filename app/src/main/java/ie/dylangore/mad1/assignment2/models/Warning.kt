@@ -1,10 +1,14 @@
 package ie.dylangore.mad1.assignment2.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * Data class for a list of weather warnings
  *
  */
-class Warning : ArrayList<Warning.WarningItem>(){
+@Parcelize
+class Warning : ArrayList<Warning.WarningItem>(), Parcelable {
     /**
      * Data class for an individual weather warning
      *
@@ -23,6 +27,7 @@ class Warning : ArrayList<Warning.WarningItem>(){
      * @property type the warning type (Wind, Rain, etc.)
      * @property updated the timestamp of when the warning was last updated
      */
+    @Parcelize
     data class WarningItem(
         val capId: String,
         val certainty: String,
@@ -38,5 +43,5 @@ class Warning : ArrayList<Warning.WarningItem>(){
         val status: String,
         val type: String,
         val updated: String
-    )
+    ) : Parcelable
 }

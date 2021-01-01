@@ -1,9 +1,13 @@
 package ie.dylangore.mad1.assignment2.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * Data class for a list of ObservationStations
  */
-class ObservationStation : ArrayList<ObservationStation.ObservationStationItem>(){
+@Parcelize
+class ObservationStation : ArrayList<ObservationStation.ObservationStationItem>(), Parcelable {
         /**
          * Data class for an individual Met Éireann observation station
          * Some of these values can be null as the data provided by Met Éireann is often incomplete
@@ -20,6 +24,7 @@ class ObservationStation : ArrayList<ObservationStation.ObservationStationItem>(
          * @property wind_gust the wind gust value for the current hour
          * @property wind_speed the wind speed value for the current hour
          */
+        @Parcelize
         data class ObservationStationItem(
                 val geohash: String,
                 val humidity: Int?,
@@ -32,5 +37,5 @@ class ObservationStation : ArrayList<ObservationStation.ObservationStationItem>(
                 val wind_direction_str: String?,
                 val wind_gust: Int?,
                 val wind_speed: Int?
-        )
+        ) : Parcelable
 }

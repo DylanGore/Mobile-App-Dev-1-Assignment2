@@ -1,5 +1,9 @@
 package ie.dylangore.mad1.assignment2.ui.fragments
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,17 +17,48 @@ import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.FragmentObservationStationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.ObservationStation
+import ie.dylangore.mad1.assignment2.models.Warning
+import ie.dylangore.mad1.assignment2.services.StationRequestService
+import ie.dylangore.mad1.assignment2.services.WarningRequestService
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 class ObservationStationsFragment : Fragment(), AnkoLogger {
 
     private lateinit var app: MainApp
+    lateinit var receiver : BroadcastReceiver
     private var _binding: FragmentObservationStationsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = requireActivity().application as MainApp
+
+        // Define a broadcast receiver to receive data from the background service that handles getting data from the internet
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if(intent?.hasExtra("station")!!){
+                    val stations = intent.extras?.getParcelableArrayList<ObservationStation.ObservationStationItem>("station")
+                    updateStationsList(stations as ArrayList<ObservationStation.ObservationStationItem>)
+                    info("list: $stations")
+                    info("Station Broadcast")
+                    binding.layoutStationsRefresh.isRefreshing = false
+                }
+            }
+        }
+
+        // Register the broadcast receiver
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("ie.dylangore.weather")
+        activity?.registerReceiver(receiver, intentFilter)
+
+        // Get the latest stations
+        refreshStations()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.unregisterReceiver(receiver)
     }
 
     override fun onCreateView(
@@ -33,12 +68,12 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
     ): View {
         _binding = FragmentObservationStationsBinding.inflate(inflater, container, false)
 
-        updateStations()
+        // Update the RecyclerView initially with an empty list to avoid an error in the logs
+        updateStationsList()
 
         // Swipe to refresh
         binding.layoutStationsRefresh.setOnRefreshListener {
-            updateStations()
-            binding.layoutStationsRefresh.isRefreshing = false
+            refreshStations()
             Toast.makeText(this.context,"Refreshed Station List", Toast.LENGTH_SHORT).show()
         }
 
@@ -54,20 +89,32 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         _binding = null
     }
 
-    private fun updateStations(){
+    /**
+     * Updates the displayed station list
+     */
+    private fun updateStationsList(stationsList: ArrayList<ObservationStation.ObservationStationItem> = arrayListOf()){
         val recyclerView = binding.recyclerViewObservationStations
         val emptyLayout = binding.layoutEmptyObservationStations
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = StationAdapter(app.stations)
+        recyclerView.adapter = StationAdapter(stationsList)
 
         // Display a TextView if the list is empty
-        if (app.stations.isNotEmpty()){
+        if (stationsList.isNotEmpty()){
             emptyLayout.visibility = View.INVISIBLE
         }else{
             emptyLayout.visibility = View.VISIBLE
         }
+    }
+
+    /**
+     * Call a background service to send a GET request to update
+     * the list of stations
+     */
+    private fun refreshStations(){
+        val intent = Intent(this.activity, StationRequestService::class.java)
+        StationRequestService.enqueueWork(this.requireContext(), intent)
     }
 }
 
