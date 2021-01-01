@@ -7,4 +7,11 @@
     <string name="empty_text_warnings">No weather warnings</string>
     <string name="empty_text_observation_stations">Could not find any observation stations!</string>
     <string name="empty_text_locations">No saved locations</string>
+    <string name="title_add_location">Add Location</string>
+    <string name="add_location_name_hint">Location Name</string>
+    <string name="add_location_latitude_hint">Latitude</string>
+    <string name="add_location_longitude_hint">Longitude</string>
+    <string name="add_location_altitude_hint">Altitude (Optional)</string>
+    <string name="add_location_add_button_text">Add</string>
+    <string name="add_location_cancel_button_text">Cancel</string>
 </resources>
