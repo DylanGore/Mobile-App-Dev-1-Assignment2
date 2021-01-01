@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.databinding.FragmentWarningsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Warning
 import org.jetbrains.anko.AnkoLogger
@@ -17,6 +17,8 @@ import org.jetbrains.anko.AnkoLogger
 class WarningsFragment : Fragment(), AnkoLogger {
 
     lateinit var app: MainApp;
+    private var _binding: FragmentWarningsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +30,10 @@ class WarningsFragment : Fragment(), AnkoLogger {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Get layout elements
-        val root : FrameLayout = inflater.inflate(R.layout.fragment_warnings, container, false) as FrameLayout
-        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view_warnings)
-        val emptyLayout: FrameLayout = root.findViewById(R.id.layout_empty_warnings)
+        _binding = FragmentWarningsBinding.inflate(inflater, container, false)
+
+        val recyclerView = binding.recyclerViewWarnings
+        val emptyLayout = binding.layoutEmptyWarnings
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -45,7 +47,15 @@ class WarningsFragment : Fragment(), AnkoLogger {
         }
 
         // Inflate the layout for this fragment
-        return root
+        return binding.root
+    }
+
+    /**
+     * Required to fix possible memory leak when using view binding
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 

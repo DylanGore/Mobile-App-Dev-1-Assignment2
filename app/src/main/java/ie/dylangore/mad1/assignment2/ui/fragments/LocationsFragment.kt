@@ -1,5 +1,7 @@
 package ie.dylangore.mad1.assignment2.ui.fragments
 
+import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.activities.AddLocationActivity
+import ie.dylangore.mad1.assignment2.databinding.FragmentLocationsBinding
+import ie.dylangore.mad1.assignment2.databinding.FragmentWarningsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Location
 import org.jetbrains.anko.AnkoLogger
@@ -19,6 +24,8 @@ import org.jetbrains.anko.AnkoLogger
 class LocationsFragment : Fragment(), AnkoLogger {
 
     lateinit var app: MainApp;
+    private var _binding: FragmentLocationsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +37,10 @@ class LocationsFragment : Fragment(), AnkoLogger {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Get layout elements
-        val root : FrameLayout = inflater.inflate(R.layout.fragment_locations, container, false) as FrameLayout
-        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view_locations)
-        val emptyLayout: FrameLayout = root.findViewById(R.id.layout_empty_locations)
+        _binding = FragmentLocationsBinding.inflate(inflater, container, false)
+
+        val recyclerView = binding.recyclerViewLocations
+        val emptyLayout = binding.layoutEmptyLocations
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -47,13 +54,21 @@ class LocationsFragment : Fragment(), AnkoLogger {
         }
 
         // FAB
-        val fab : FloatingActionButton = root.findViewById(R.id.fab_add_location)
-        fab.setOnClickListener {
-            Toast.makeText(this.context, "NYI", Toast.LENGTH_SHORT).show()
+        binding.fabAddLocation.setOnClickListener {
+            val intent = Intent(this.activity, AddLocationActivity::class.java)
+            this.activity?.startActivityForResult(intent, 0)
         }
 
         // Inflate the layout for this fragment
-        return root
+        return binding.root
+    }
+
+    /**
+     * Required to fix possible memory leak when using view binding
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 

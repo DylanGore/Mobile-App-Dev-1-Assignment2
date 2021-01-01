@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.databinding.FragmentObservationStationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import org.jetbrains.anko.AnkoLogger
 
 class ObservationStationsFragment : Fragment(), AnkoLogger {
 
-    lateinit var app: MainApp;
+    private lateinit var app: MainApp
+    private var _binding: FragmentObservationStationsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +30,10 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Get layout elements
-        val root : FrameLayout = inflater.inflate(R.layout.fragment_observation_stations, container, false) as FrameLayout
-        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view_observation_stations)
-        val emptyLayout: FrameLayout = root.findViewById(R.id.layout_empty_observation_stations)
+        _binding = FragmentObservationStationsBinding.inflate(inflater, container, false)
+
+        val recyclerView = binding.recyclerViewObservationStations
+        val emptyLayout = binding.layoutEmptyObservationStations
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -45,7 +47,15 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         }
 
         // Inflate the layout for this fragment
-        return root
+        return binding.root
+    }
+
+    /**
+     * Required to fix possible memory leak when using view binding
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 
@@ -67,7 +77,7 @@ private class StationAdapter(private var stations: ArrayList<ObservationStation.
 
     private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(station: ObservationStation.ObservationStationItem){
-            var cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
+            val cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
             cardTitle.text = station.location
         }
     }

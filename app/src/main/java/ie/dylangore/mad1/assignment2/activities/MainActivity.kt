@@ -9,6 +9,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.databinding.ActivityAddLocationBinding
+import ie.dylangore.mad1.assignment2.databinding.ActivityMainBinding
 import ie.dylangore.mad1.assignment2.helpers.NetworkHelper
 import org.jetbrains.anko.AnkoLogger
 
@@ -17,9 +19,12 @@ import org.jetbrains.anko.AnkoLogger
  */
 class MainActivity : AppCompatActivity(), AnkoLogger {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Configure AppBar navigation
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
