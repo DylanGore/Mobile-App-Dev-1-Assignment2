@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,13 +28,21 @@ class WarningsFragment : Fragment(), AnkoLogger {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        // Get layout elements
         val root : FrameLayout = inflater.inflate(R.layout.fragment_warnings, container, false) as FrameLayout
-        val layoutManager = LinearLayoutManager(this.context)
         val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view_warnings)
+        val emptyLayout: FrameLayout = root.findViewById(R.id.layout_empty_warnings)
 
-        recyclerView.layoutManager = layoutManager
+        // Setup the RecyclerView and Adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = WarningAdapter(app.warnings)
+
+        // Display a TextView if the list is empty
+        if (app.warnings.isNotEmpty()){
+            emptyLayout.visibility = View.INVISIBLE
+        }else{
+            emptyLayout.visibility = View.VISIBLE
+        }
 
         // Inflate the layout for this fragment
         return root
@@ -61,7 +67,7 @@ private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem
 
     private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(Warning: Warning.WarningItem){
-            val card : CardView = itemView.findViewById(R.id.list_card)
+            //val card : CardView = itemView.findViewById(R.id.list_card)
             val cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
             val cardDescription : TextView = itemView.findViewById(R.id.list_card_description)
             // TODO modify color based on warning level

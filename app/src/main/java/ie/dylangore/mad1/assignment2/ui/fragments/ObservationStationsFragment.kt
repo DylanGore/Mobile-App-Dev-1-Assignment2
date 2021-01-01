@@ -28,13 +28,21 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        // Get layout elements
         val root : FrameLayout = inflater.inflate(R.layout.fragment_observation_stations, container, false) as FrameLayout
-        val layoutManager = LinearLayoutManager(this.context)
         val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view_observation_stations)
+        val emptyLayout: FrameLayout = root.findViewById(R.id.layout_empty_observation_stations)
 
-        recyclerView.layoutManager = layoutManager
+        // Setup the RecyclerView and Adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = StationAdapter(app.stations)
+
+        // Display a TextView if the list is empty
+        if (app.stations.isNotEmpty()){
+            emptyLayout.visibility = View.INVISIBLE
+        }else{
+            emptyLayout.visibility = View.VISIBLE
+        }
 
         // Inflate the layout for this fragment
         return root

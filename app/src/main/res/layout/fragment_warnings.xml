@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.WarningsFragment">
 
+    <FrameLayout
+        android:id="@+id/layout_empty_warnings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/empty_text_warnings"
+            android:textAppearance="?android:textAppearanceMedium" />
+    </FrameLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_warnings"
         android:layout_width="match_parent"
