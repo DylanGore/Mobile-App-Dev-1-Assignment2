@@ -8,10 +8,13 @@
     <string name="empty_text_observation_stations">Could not find any observation stations!</string>
     <string name="empty_text_locations">No saved locations</string>
     <string name="title_add_location">Add Location</string>
-    <string name="add_location_name_hint">Location Name</string>
-    <string name="add_location_latitude_hint">Latitude</string>
-    <string name="add_location_longitude_hint">Longitude</string>
-    <string name="add_location_altitude_hint">Altitude (Optional)</string>
-    <string name="add_location_add_button_text">Add</string>
-    <string name="add_location_cancel_button_text">Cancel</string>
+    <string name="title_edit_location">Edit Location</string>
+    <string name="location_name_hint">Location Name</string>
+    <string name="location_latitude_hint">Latitude</string>
+    <string name="location_longitude_hint">Longitude</string>
+    <string name="location_altitude_hint">Altitude (Optional)</string>
+    <string name="location_add_button_text">Add</string>
+    <string name="location_edit_button_text">Edit</string>
+    <string name="location_cancel_button_text">Cancel</string>
+    <string name="location_delete_button_text">Delete</string>
 </resources>

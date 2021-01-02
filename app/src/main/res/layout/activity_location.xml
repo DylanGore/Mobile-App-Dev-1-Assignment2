@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddLocationActivity">
+    tools:context=".activities.LocationActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,42 +18,49 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/add_location_name"
+                android:id="@+id/location_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/add_location_name_hint"
+                android:hint="@string/location_name_hint"
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/add_location_latitude"
+                android:id="@+id/location_latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/add_location_latitude_hint"
+                android:hint="@string/location_latitude_hint"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/add_location_longitude"
+                android:id="@+id/location_longitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/add_location_longitude_hint"
+                android:hint="@string/location_longitude_hint"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/add_location_altitude"
+                android:id="@+id/location_altitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/add_location_altitude_hint"
+                android:hint="@string/location_altitude_hint"
                 android:inputType="number" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/location_add_edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_location_add_button_text" />
+                android:text="@string/location_add_button_text" />
+
+            <Button
+                android:id="@+id/location_delete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/location_delete_button_text"
+                tools:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

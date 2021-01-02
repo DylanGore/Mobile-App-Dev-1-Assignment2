@@ -10,16 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
-import ie.dylangore.mad1.assignment2.activities.AddLocationActivity
+import ie.dylangore.mad1.assignment2.activities.LocationActivity
 import ie.dylangore.mad1.assignment2.databinding.FragmentLocationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Location
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 
 class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
 
-    lateinit var app: MainApp;
+    lateinit var app: MainApp
     private var _binding: FragmentLocationsBinding? = null
     private val binding get() = _binding!!
 
@@ -32,15 +33,20 @@ class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLocationsBinding.inflate(inflater, container, false)
+
+        // Set the layout of the RecyclerView
+        binding.recyclerViewLocations.layoutManager = LinearLayoutManager(this.context)
+
+        info { "Before: " + app.locations.findAll() }
 
         updateLocations()
 
         // FAB
         binding.fabAddLocation.setOnClickListener {
-            val intent = Intent(this.activity, AddLocationActivity::class.java)
-            activity?.startActivityForResult(intent, 0)
+            val intent = Intent(activity, LocationActivity::class.java)
+            startActivityForResult(intent, 0)
         }
 
         // Inflate the layout for this fragment
@@ -48,20 +54,25 @@ class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        updateLocations()
-        super.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data);
+        binding.recyclerViewLocations.adapter?.notifyDataSetChanged()
+        checkIfEmpty()
     }
 
     private fun updateLocations(){
         val recyclerView = binding.recyclerViewLocations
-        val emptyLayout = binding.layoutEmptyLocations
 
         // Setup the RecyclerView and Adapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = LocationAdapter(app.locations, this)
+        recyclerView.adapter = LocationAdapter(app.locations.findAll(), this)
+        recyclerView.adapter?.notifyDataSetChanged()
 
+        checkIfEmpty()
+    }
+
+    private fun checkIfEmpty(){
+        val emptyLayout = binding.layoutEmptyLocations
         // Display a TextView if the list is empty
-        if (app.locations.isNotEmpty()){
+        if (app.locations.findAll().isNotEmpty()){
             emptyLayout.visibility = View.INVISIBLE
         }else{
             emptyLayout.visibility = View.VISIBLE
@@ -77,7 +88,9 @@ class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
     }
 
     override fun onLocationClick(location: Location) {
-        activity?.startActivityForResult(activity?.intentFor<AddLocationActivity>()?.putExtra("location_edit", location), 0)
+        val intent = Intent(activity, LocationActivity::class.java)
+        intent.putExtra("location_edit", location)
+        startActivityForResult(intent, 0)
     }
 }
 

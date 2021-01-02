@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/add_location_item_cancel"
+        android:id="@+id/location_item_cancel"
         android:icon="@drawable/ic_cancel"
-        android:title="@string/add_location_cancel_button_text"
+        android:title="@string/location_cancel_button_text"
         app:showAsAction="always|withText" />
 </menu>
