@@ -24,7 +24,7 @@ import org.jetbrains.anko.info
 /**
  * The fragment that displays the list of observation stations
  */
-class ObservationStationsFragment : Fragment(), AnkoLogger {
+class ObservationStationsFragment : Fragment(), AnkoLogger, StationListener {
 
     private lateinit var app: MainApp
     private lateinit var receiver : BroadcastReceiver
@@ -108,7 +108,7 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = StationAdapter(stationsList)
+        recyclerView.adapter = StationAdapter(stationsList, this)
 
         // Display a TextView if the list is empty
         if (stationsList.isNotEmpty()){
@@ -126,12 +126,31 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         val intent = Intent(this.activity, StationRequestService::class.java)
         StationRequestService.enqueueWork(this.requireContext(), intent)
     }
+
+    /**
+     * Opens the ObservationStationActivity when a station in the
+     * list is clicked on.
+     */
+    override fun onStationClick(station: ObservationStation.ObservationStationItem) {
+        val intent = Intent(activity, ie.dylangore.mad1.assignment2.activities.ObservationStationActivity::class.java)
+        // Pass the selected station data through to the activity
+        intent.putExtra("station_view", station)
+        startActivityForResult(intent, 0)
+    }
 }
+
+/**
+ * Handle when a location list item is clicked on
+ */
+interface StationListener {
+    fun onStationClick(station: ObservationStation.ObservationStationItem)
+}
+
 
 /**
  * Adapter to handle displaying a list of observation stations
  */
-private class StationAdapter(private var stations: ArrayList<ObservationStation.ObservationStationItem>) : RecyclerView.Adapter<StationAdapter.MainHolder>() {
+private class StationAdapter(private var stations: ArrayList<ObservationStation.ObservationStationItem>, private val listener: StationListener) : RecyclerView.Adapter<StationAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(
                 R.layout.list_card,
@@ -142,13 +161,14 @@ private class StationAdapter(private var stations: ArrayList<ObservationStation.
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val station = stations[holder.adapterPosition]
-        holder.bind(station)
+        holder.bind(station, listener)
     }
 
     override fun getItemCount(): Int = stations.size
 
     private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(station: ObservationStation.ObservationStationItem){
+        fun bind(station: ObservationStation.ObservationStationItem, listener: StationListener){
+            itemView.setOnClickListener { listener.onStationClick(station) }
             val cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
             cardTitle.text = station.location
         }

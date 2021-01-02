@@ -1,10 +1,7 @@
 package ie.dylangore.mad1.assignment2.weather
 
-import com.beust.klaxon.Klaxon
-import ie.dylangore.mad1.assignment2.models.Forecast
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.lang.Exception
 
 /**
  * Object that handles getting and formatting forecast data
@@ -34,26 +31,5 @@ object Forecasts {
         }
 
         return(result)
-    }
-
-    /**
-     * Convert the forecast JSON from Met.No to the Forecast data object
-     *
-     * @param latitude the latitude of the location
-     * @param longitude the longitude of the location
-     * @param altitude the altitude of the location (default: 0)
-     * @param data the forecast data passed as a string, used for testing (default: empty)
-     * @return the weather forecast for the given location as a Forecast object
-     */
-    fun getForecast(latitude:Double = 52.2461, longitude:Double = -7.1387, altitude: Int = 0, data:String = ""): Forecast? {
-        // Check if data has been passed as a string, if not get new data from the API
-        val forecastData: String = if (data.isEmpty()) apiRequest(latitude = latitude, longitude = longitude, altitude = altitude) else data
-        // Parse the data and return it as a Forecast object
-        return try{
-            Klaxon().parse(forecastData)
-        }catch (ex: Exception){
-            error("Error while parsing forecast data")
-            null
-        }
     }
 }

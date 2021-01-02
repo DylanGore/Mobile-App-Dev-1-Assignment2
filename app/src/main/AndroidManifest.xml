@@ -13,16 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather">
+        <activity android:name=".activities.ObservationStationActivity"></activity>
 
         <service
             android:name=".services.StationRequestService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"/>
-
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".services.WarningRequestService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-        android:exported="true"/>
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name=".activities.LocationActivity"
