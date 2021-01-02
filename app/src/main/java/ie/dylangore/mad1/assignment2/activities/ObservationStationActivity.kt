@@ -1,5 +1,6 @@
 package ie.dylangore.mad1.assignment2.activities
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -108,8 +109,12 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
         val symbolLayers = ArrayList<Feature>()
         symbolLayers.add(Feature.fromGeometry(Point.fromLngLat(coordinates.lon, coordinates.lat))) //remember to reverse LatLng
 
+        // Set map theme depending of device display mode
+        var mapTheme = Style.MAPBOX_STREETS
+        if(isDarkModeOn()) mapTheme = Style.DARK
+
         // Configure the map style
-        val mapStyle = Style.Builder().fromUri(Style.MAPBOX_STREETS).withImage("ICON_ID", BitmapUtils.getBitmapFromDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.mapbox_marker_icon_default))!!)
+        val mapStyle = Style.Builder().fromUri(mapTheme).withImage("ICON_ID", BitmapUtils.getBitmapFromDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.mapbox_marker_icon_default))!!)
             .withSource(GeoJsonSource("SOURCE_ID", FeatureCollection.fromFeatures(symbolLayers))).withLayer(SymbolLayer("LAYER_ID", "SOURCE_ID")
                 .withProperties(iconImage("ICON_ID"), iconSize(1.0f), iconAllowOverlap(true), iconIgnorePlacement(true)))
 
@@ -146,5 +151,13 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Check if the device is running in dark mode or not
+     */
+    private fun isDarkModeOn(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 }
