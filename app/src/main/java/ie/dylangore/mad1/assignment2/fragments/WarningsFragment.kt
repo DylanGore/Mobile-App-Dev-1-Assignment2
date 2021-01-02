@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.activities.WarningActivity
 import ie.dylangore.mad1.assignment2.databinding.FragmentWarningsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Warning
@@ -24,7 +25,7 @@ import org.jetbrains.anko.info
 /**
  * The fragment that displays the list of weather warnings
  */
-class WarningsFragment : Fragment(), AnkoLogger {
+class WarningsFragment : Fragment(), AnkoLogger, WarningListener {
 
     private lateinit var app: MainApp
     private lateinit var receiver : BroadcastReceiver
@@ -112,7 +113,7 @@ class WarningsFragment : Fragment(), AnkoLogger {
 
         // Setup the RecyclerView and Adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = WarningAdapter(warningsList)
+        recyclerView.adapter = WarningAdapter(warningsList, this)
 
         // Display a TextView if the list is empty
         if (warningsList.isNotEmpty()){
@@ -130,12 +131,30 @@ class WarningsFragment : Fragment(), AnkoLogger {
         val intent = Intent(this.activity, WarningRequestService::class.java)
         WarningRequestService.enqueueWork(this.requireContext(), intent)
     }
+
+    /**
+     * Opens the WarningActivity when a warning in the
+     * list is clicked on.
+     */
+    override fun onWarningClick(warning: Warning.WarningItem) {
+        val intent = Intent(activity, WarningActivity::class.java)
+        // Pass the selected warning data through to the activity
+        intent.putExtra("warning_view", warning)
+        startActivityForResult(intent, 0)
+    }
+}
+
+/**
+ * Handle when a location list item is clicked on
+ */
+private interface WarningListener {
+    fun onWarningClick(warning: Warning.WarningItem)
 }
 
 /**
  * Adapter to handle displaying a list of weather warnings
  */
-private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem>) : RecyclerView.Adapter<WarningAdapter.MainHolder>() {
+private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem>, private val listener: WarningListener) : RecyclerView.Adapter<WarningAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(
                 R.layout.list_card,
@@ -146,20 +165,21 @@ private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val warning = Warnings[holder.adapterPosition]
-        holder.bind(warning)
+        holder.bind(warning, listener)
     }
 
     override fun getItemCount(): Int = Warnings.size
 
     private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(Warning: Warning.WarningItem){
+        fun bind(warning: Warning.WarningItem, listener: WarningListener){
+            itemView.setOnClickListener{ listener.onWarningClick(warning) }
             //val card : CardView = itemView.findViewById(R.id.list_card)
             val cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
             val cardDescription : TextView = itemView.findViewById(R.id.list_card_description)
             // TODO modify color based on warning level
             //card.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.primaryColor))
-            cardTitle.text = Warning.headline
-            cardDescription.text = Warning.description
+            cardTitle.text = warning.headline
+            cardDescription.text = warning.description
             cardDescription.visibility = View.VISIBLE
         }
     }

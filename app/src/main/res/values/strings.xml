@@ -32,5 +32,12 @@
     <string name="station_geohash">GeoHash: %1$s</string>
     <string name="station_latitude">Latitude: %1$s</string>
     <string name="station_longitude">Longitude: %1$s</string>
-    <string name="station_last_updated">Last Updated: %1$sr</string>
+    <string name="station_last_updated">Last Updated: %1$s</string>
+    <string name="warning_level">%1$s Warning</string>
+    <string name="warning_issued">Issued: %1$s</string>
+    <string name="warning_updated">Updated: %1$s</string>
+    <string name="warning_onset">Active From: %1$s</string>
+    <string name="warning_expiry">Active Until: %1$s</string>
+    <string name="warning_type">Warning Type: %1$s</string>
+    <string name="warning_regions">Regions: %1$s</string>
 </resources>
