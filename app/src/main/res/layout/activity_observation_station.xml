@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_observation_station"
     android:layout_width="match_parent"
@@ -69,5 +70,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/station_longitude" />
+
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraTargetLat="-32.557013"
+        mapbox:mapbox_cameraTargetLng="-56.149056"
+        mapbox:mapbox_cameraZoom="5.526846">
+
+        <ImageView
+            android:id="@+id/station_marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:visibility="gone" />
+    </com.mapbox.mapboxsdk.maps.MapView>
 
 </LinearLayout>

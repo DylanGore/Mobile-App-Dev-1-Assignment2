@@ -19,7 +19,8 @@ object RequestHelper: AnkoLogger {
 
     // Define the base URLs for each API
     private const val STATION_BASE_URL = "https://maps.stream.dylangore.space/api/latest/"
-    private const val WARNING_BASE_URL = "https://www.met.ie/Open_Data/json/"
+//    private const val WARNING_BASE_URL = "https://www.met.ie/Open_Data/json/"
+    private const val WARNING_BASE_URL = "https://ha.home.dylangore.space/local/testing/"
 
 
     /**
