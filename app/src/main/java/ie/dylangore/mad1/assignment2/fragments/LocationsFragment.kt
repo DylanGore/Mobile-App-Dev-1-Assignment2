@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.activities.ForecastActivity
 import ie.dylangore.mad1.assignment2.activities.LocationActivity
 import ie.dylangore.mad1.assignment2.databinding.FragmentLocationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
@@ -110,9 +111,9 @@ class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
      * list is clicked on.
      */
     override fun onLocationClick(location: Location) {
-        val intent = Intent(activity, LocationActivity::class.java)
+        val intent = Intent(activity, ForecastActivity::class.java)
         // Pass the selected location data through to the activity
-        intent.putExtra("location_edit", location)
+        intent.putExtra("location", location)
         startActivityForResult(intent, 0)
     }
 }

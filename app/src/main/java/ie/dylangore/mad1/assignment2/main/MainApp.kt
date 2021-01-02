@@ -21,6 +21,6 @@ class MainApp : Application(), AnkoLogger {
         info("App has started!")
 
         // Add a test location
-        locations.add(Location(0, "test", 52.0, -7.256, 0))
+        locations.add(Location(0, "WIT", 52.2461, 7.1387, 0))
     }
 }

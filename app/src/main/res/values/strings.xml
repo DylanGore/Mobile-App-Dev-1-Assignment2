@@ -17,9 +17,6 @@
     <string name="location_edit_button_text">Edit</string>
     <string name="location_cancel_button_text">Cancel</string>
     <string name="location_delete_button_text">Delete</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="back">Back</string>
     <string name="title_location_delete_confirmation">Are you sure?</string>
     <string name="no_network">No network connection!</string>
     <string name="station_weather_description">Weather Description: %1$s</string>
@@ -40,4 +37,10 @@
     <string name="warning_expiry">Active Until: %1$s</string>
     <string name="warning_type">Warning Type: %1$s</string>
     <string name="warning_regions">Regions: %1$s</string>
+    <string name="forecast_loading">Loading forecast…</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

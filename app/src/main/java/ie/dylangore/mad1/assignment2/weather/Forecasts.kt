@@ -20,7 +20,7 @@ object Forecasts {
      * @param altitude the altitude of the location
      * @return the forecast data as a JSON string
      */
-    private fun apiRequest(baseUrl: String = "https://api.met.no/weatherapi/locationforecast/2.0/compact", latitude:Double = 52.2461, longitude:Double = -7.1387, altitude: Int = 0): String {
+    private fun apiRequest(baseUrl: String = "compact", latitude:Double = 52.2461, longitude:Double = -7.1387, altitude: Int = 0): String {
         val request = Request.Builder().url("$baseUrl?altitude=$altitude&lat=$latitude&lon=$longitude").header("User-Agent", "KotlinWeather").build()
         var result = "[]"
 

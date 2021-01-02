@@ -44,8 +44,8 @@ class LocationActivity : AppCompatActivity() {
             title = "${resources.getString(R.string.title_edit_location)}: ${location.name} (ID ${location.id})"
             binding.locationAddEditButton.setText(R.string.location_edit_button_text)
 
-            // Show the delete button
-            binding.locationDeleteButton.visibility = View.VISIBLE
+            // Show the delete button TODO: hidden for now, see below
+            binding.locationDeleteButton.visibility = View.GONE
         }
 
         // Add/Edit Button
@@ -70,28 +70,29 @@ class LocationActivity : AppCompatActivity() {
         }
 
         // Delete Button
-        binding.locationDeleteButton.setOnClickListener {
-            // Create an alert dialog to ask the user to confirm deletion
-            val alert = AlertDialog.Builder(this)
-            alert.setTitle(R.string.title_location_delete_confirmation)
-
-            // Yes button
-            alert.setPositiveButton(R.string.yes) { _, _ ->
-                app.locations.delete(location.id) // Delete the location from the store
-                Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
-                setResult(RESULT_OK)
-                finish()
-            }
-
-            // No button
-            alert.setNegativeButton(R.string.no) { _, _ ->
-                setResult(RESULT_CANCELED)
-                finish()
-            }
-
-            // Display the alert
-            alert.show()
-        }
+//        TODO This function is currently handled by the ForecastActivity
+//        binding.locationDeleteButton.setOnClickListener {
+//            // Create an alert dialog to ask the user to confirm deletion
+//            val alert = AlertDialog.Builder(this)
+//            alert.setTitle(R.string.title_location_delete_confirmation)
+//
+//            // Yes button
+//            alert.setPositiveButton(R.string.yes) { _, _ ->
+//                app.locations.delete(location.id) // Delete the location from the store
+//                Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
+//                setResult(RESULT_OK)
+//                finish()
+//            }
+//
+//            // No button
+//            alert.setNegativeButton(R.string.no) { _, _ ->
+//                setResult(RESULT_CANCELED)
+//                finish()
+//            }
+//
+//            // Display the alert
+//            alert.show()
+//        }
     }
 
     /**

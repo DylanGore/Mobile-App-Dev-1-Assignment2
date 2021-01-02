@@ -1,9 +1,12 @@
 package ie.dylangore.mad1.assignment2.helpers
 
+import ie.dylangore.mad1.assignment2.api.ForecastApi
 import ie.dylangore.mad1.assignment2.api.StationApi
 import ie.dylangore.mad1.assignment2.api.WarningsApi
+import ie.dylangore.mad1.assignment2.models.Forecast
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import ie.dylangore.mad1.assignment2.models.Warning
+import okhttp3.OkHttpClient
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
@@ -21,6 +24,7 @@ object RequestHelper: AnkoLogger {
     private const val STATION_BASE_URL = "https://maps.stream.dylangore.space/api/latest/"
 //    private const val WARNING_BASE_URL = "https://www.met.ie/Open_Data/json/"
     private const val WARNING_BASE_URL = "https://ha.home.dylangore.space/local/testing/"
+    private const val FORECAST_BASE_URL = "https://api.met.no/weatherapi/locationforecast/2.0/"
 
 
     /**
@@ -73,6 +77,37 @@ object RequestHelper: AnkoLogger {
         info("Found ${result.size} warnings")
 
         return  result as ArrayList<Warning.WarningItem>
+    }
+
+    /**
+     * Synchronous function to get data from the Met Éireann weather warning API
+     */
+    fun getForecastSync(altitude: Int, latitude: Double, longitude: Double): Forecast? {
+        lateinit var result: Forecast
+
+        // Create a custom HTTP client with a custom User-Agent as required by met.no
+        val client = OkHttpClient.Builder().addNetworkInterceptor { chain ->
+                chain.proceed(chain.request().newBuilder().header("User-Agent", "KotlinWeather").build())
+            }.build()
+
+        val  retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(FORECAST_BASE_URL)
+            .client(client)
+            .build()
+
+        val forecastApi = retrofit.create(ForecastApi::class.java)
+        val call: Call<Forecast> = forecastApi.getForecast(altitude.toString(), latitude.toString(), longitude.toString())
+
+        // Attempt to make a request to the API
+        try {
+            val response = call.execute()
+            result = response.body()!!
+        } catch (t: Throwable){
+            info(t.message)
+        }
+
+        return result
     }
 
     /**
