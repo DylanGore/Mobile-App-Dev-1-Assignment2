@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.ActivityLocationBinding
@@ -64,11 +65,26 @@ class LocationActivity : AppCompatActivity() {
 
         // Delete Button
         binding.locationDeleteButton.setOnClickListener {
-            app.locations.delete(location.id)
-            Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
+            // Create an alert dialog to ask the user to confirm deletion
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle(R.string.title_location_delete_confirmation)
 
-            setResult(RESULT_OK)
-            finish()
+            // Yes button
+            alert.setPositiveButton(R.string.yes) { _, _ ->
+                app.locations.delete(location.id)
+                Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
+                setResult(RESULT_OK)
+                finish()
+            }
+
+            // No button
+            alert.setNegativeButton(R.string.no) { dialog, which ->
+                setResult(RESULT_CANCELED)
+                finish()
+            }
+
+            // Display the alert
+            alert.show()
         }
     }
 

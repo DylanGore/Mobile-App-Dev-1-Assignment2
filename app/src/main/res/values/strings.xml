@@ -17,4 +17,7 @@
     <string name="location_edit_button_text">Edit</string>
     <string name="location_cancel_button_text">Cancel</string>
     <string name="location_delete_button_text">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="title_location_delete_confirmation">Are you sure?</string>
 </resources>
