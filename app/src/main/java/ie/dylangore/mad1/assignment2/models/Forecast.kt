@@ -2,7 +2,7 @@
 
 package ie.dylangore.mad1.assignment2.models
 
-import com.beust.klaxon.Json
+import com.google.gson.annotations.SerializedName
 
 /**
  * Forecast data class for the Met.no Forecast API
@@ -45,7 +45,7 @@ data class Forecast(
      * @property units the units used in the forecast data
      */
     data class Meta (
-        @Json(name = "updated_at")
+        @SerializedName("updated_at")
         val updatedAt: String,
 
         val units: Units
@@ -63,25 +63,25 @@ data class Forecast(
      * @property windSpeed - as named
      */
     data class Units (
-        @Json(name = "air_pressure_at_sea_level")
+        @SerializedName("air_pressure_at_sea_level")
         val airPressureAtSeaLevel: String,
 
-        @Json(name = "air_temperature")
+        @SerializedName("air_temperature")
         val airTemperature: String,
 
-        @Json(name = "cloud_area_fraction")
+        @SerializedName("cloud_area_fraction")
         val cloudAreaFraction: String,
 
-        @Json(name = "precipitation_amount")
+        @SerializedName("precipitation_amount")
         val precipitationAmount: String,
 
-        @Json(name = "relative_humidity")
+        @SerializedName("relative_humidity")
         val relativeHumidity: String,
 
-        @Json(name = "wind_from_direction")
+        @SerializedName("wind_from_direction")
         val windFromDirection: String,
 
-        @Json(name = "wind_speed")
+        @SerializedName("wind_speed")
         val windSpeed: String
     )
 
@@ -107,13 +107,13 @@ data class Forecast(
     data class Data (
         val instant: Instant,
 
-        @Json(name = "next_12_hours")
+        @SerializedName("next_12_hours")
         val next12_Hours: Next12_Hours? = null,
 
-        @Json(name = "next_1_hours")
+        @SerializedName("next_1_hours")
         val next1_Hours: NextHours? = null,
 
-        @Json(name = "next_6_hours")
+        @SerializedName("next_6_hours")
         val next6_Hours: NextHours? = null
     )
 
@@ -137,22 +137,22 @@ data class Forecast(
      * @property windSpeed
      */
     data class InstantDetails (
-        @Json(name = "air_pressure_at_sea_level")
+        @SerializedName("air_pressure_at_sea_level")
         val airPressureAtSeaLevel: Double,
 
-        @Json(name = "air_temperature")
+        @SerializedName("air_temperature")
         val airTemperature: Double,
 
-        @Json(name = "cloud_area_fraction")
+        @SerializedName("cloud_area_fraction")
         val cloudAreaFraction: Double,
 
-        @Json(name = "relative_humidity")
+        @SerializedName("relative_humidity")
         val relativeHumidity: Double,
 
-        @Json(name = "wind_from_direction")
+        @SerializedName("wind_from_direction")
         val windFromDirection: Double,
 
-        @Json(name = "wind_speed")
+        @SerializedName("wind_speed")
         val windSpeed: Double
     )
 
@@ -171,7 +171,7 @@ data class Forecast(
      * @property symbolCode the weather symbol to use
      */
     data class Summary (
-        @Json(name = "symbol_code")
+        @SerializedName("symbol_code")
         val symbolCode: String
     )
 
@@ -192,7 +192,7 @@ data class Forecast(
      * @property precipitationAmount amount of rain
      */
     data class Next1_HoursDetails (
-        @Json(name = "precipitation_amount")
+        @SerializedName("precipitation_amount")
         val precipitationAmount: Double
     )
 

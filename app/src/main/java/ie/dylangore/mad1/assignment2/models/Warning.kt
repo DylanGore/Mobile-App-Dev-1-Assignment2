@@ -1,5 +1,6 @@
 package ie.dylangore.mad1.assignment2.models
 
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

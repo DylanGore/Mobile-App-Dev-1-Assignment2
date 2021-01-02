@@ -4,9 +4,13 @@ import ie.dylangore.mad1.assignment2.models.ObservationStation
 import retrofit2.Call
 import retrofit2.http.GET
 
+/**
+ * Interface to list API endpoints and results for Observation Stations
+ */
 interface StationApi {
-    //https://maps.stream.dylangore.space/api/latest/meteireann
-
+    /**
+     * /meteireann - return an array list of ObservationStationItem objects
+     */
     @GET("meteireann")
     fun getMetEireannStations(): Call<ArrayList<ObservationStation.ObservationStationItem>>
 }

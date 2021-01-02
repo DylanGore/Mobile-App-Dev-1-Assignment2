@@ -1,4 +1,4 @@
-package ie.dylangore.mad1.assignment2.ui.fragments
+package ie.dylangore.mad1.assignment2.fragments
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -21,13 +21,21 @@ import ie.dylangore.mad1.assignment2.services.WarningRequestService
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
+/**
+ * The fragment that displays the list of weather warnings
+ */
 class WarningsFragment : Fragment(), AnkoLogger {
 
-    lateinit var app: MainApp
-    lateinit var receiver : BroadcastReceiver
+    private lateinit var app: MainApp
+    private lateinit var receiver : BroadcastReceiver
+
+    // View binding
     private var _binding: FragmentWarningsBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * Called when fragment is initially created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = requireActivity().application as MainApp
@@ -49,16 +57,11 @@ class WarningsFragment : Fragment(), AnkoLogger {
         val intentFilter = IntentFilter()
         intentFilter.addAction("ie.dylangore.weather")
         activity?.registerReceiver(receiver, intentFilter)
-
-        // Get the latest warnings
-        refreshWarnings()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        activity?.unregisterReceiver(receiver)
-    }
-
+    /**
+     * Runs when the view is created, any GUI-related init should be done here.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,7 +72,10 @@ class WarningsFragment : Fragment(), AnkoLogger {
         // Update the RecyclerView initially with an empty list to avoid an error in the logs
         updateWarningsList()
 
-        // Swipe to refresh
+        // Get the latest warnings
+        refreshWarnings()
+
+        // Handle the pull to refresh action
         binding.layoutWarningsRefresh.setOnRefreshListener {
             refreshWarnings()
             Toast.makeText(this.context,"Refreshed Warning List", Toast.LENGTH_SHORT).show()
@@ -80,11 +86,21 @@ class WarningsFragment : Fragment(), AnkoLogger {
     }
 
     /**
-     * Required to fix possible memory leak when using view binding
+     * Runs when the view is destroyed. Required to avoid
+     * possible memory leak when using view binding.
      */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Runs when the fragment is destroyed. The BroadcastReceiver
+     * must be unregistered to avoid a memory leak.
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.unregisterReceiver(receiver)
     }
 
     /**
@@ -108,7 +124,7 @@ class WarningsFragment : Fragment(), AnkoLogger {
 
     /**
      * Call a background service to send a GET request to update
-     * the list of warnings
+     * the list of warnings.
      */
     private fun refreshWarnings(){
         val intent = Intent(this.activity, WarningRequestService::class.java)
@@ -116,6 +132,9 @@ class WarningsFragment : Fragment(), AnkoLogger {
     }
 }
 
+/**
+ * Adapter to handle displaying a list of weather warnings
+ */
 private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem>) : RecyclerView.Adapter<WarningAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(

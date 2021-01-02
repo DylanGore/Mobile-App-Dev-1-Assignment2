@@ -13,13 +13,19 @@ import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Location
 import org.jetbrains.anko.toast
 
+/**
+ * The activity used to add/edit a location
+ */
 class LocationActivity : AppCompatActivity() {
 
-    private lateinit var app: MainApp;
+    private lateinit var app: MainApp
     private lateinit var binding: ActivityLocationBinding
     private var location = Location()
     private var editMode = false
 
+    /**
+     * Runs when the activity is created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as MainApp
@@ -71,14 +77,14 @@ class LocationActivity : AppCompatActivity() {
 
             // Yes button
             alert.setPositiveButton(R.string.yes) { _, _ ->
-                app.locations.delete(location.id)
+                app.locations.delete(location.id) // Delete the location from the store
                 Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
                 setResult(RESULT_OK)
                 finish()
             }
 
             // No button
-            alert.setNegativeButton(R.string.no) { dialog, which ->
+            alert.setNegativeButton(R.string.no) { _, _ ->
                 setResult(RESULT_CANCELED)
                 finish()
             }
@@ -88,11 +94,17 @@ class LocationActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Create the top menu buttons
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_add_location, menu)
         return true
     }
 
+    /**
+     * Handle actions for the top menu buttons
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.location_item_cancel -> {

@@ -1,4 +1,4 @@
-package ie.dylangore.mad1.assignment2.ui.fragments
+package ie.dylangore.mad1.assignment2.fragments
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -17,19 +17,25 @@ import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.FragmentObservationStationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.ObservationStation
-import ie.dylangore.mad1.assignment2.models.Warning
 import ie.dylangore.mad1.assignment2.services.StationRequestService
-import ie.dylangore.mad1.assignment2.services.WarningRequestService
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
+/**
+ * The fragment that displays the list of observation stations
+ */
 class ObservationStationsFragment : Fragment(), AnkoLogger {
 
     private lateinit var app: MainApp
-    lateinit var receiver : BroadcastReceiver
+    private lateinit var receiver : BroadcastReceiver
+
+    // View binding
     private var _binding: FragmentObservationStationsBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * Called when fragment is initially created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = requireActivity().application as MainApp
@@ -51,27 +57,21 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
         val intentFilter = IntentFilter()
         intentFilter.addAction("ie.dylangore.weather")
         activity?.registerReceiver(receiver, intentFilter)
-
-        // Get the latest stations
-        refreshStations()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        activity?.unregisterReceiver(receiver)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    /**
+     * Runs when the view is created, any GUI-related init should be done here.
+     */
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentObservationStationsBinding.inflate(inflater, container, false)
 
         // Update the RecyclerView initially with an empty list to avoid an error in the logs
         updateStationsList()
 
-        // Swipe to refresh
+        // Get the latest stations from the internet
+        refreshStations()
+
+        // Handle the pull to refresh action
         binding.layoutStationsRefresh.setOnRefreshListener {
             refreshStations()
             Toast.makeText(this.context,"Refreshed Station List", Toast.LENGTH_SHORT).show()
@@ -82,11 +82,21 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
     }
 
     /**
-     * Required to fix possible memory leak when using view binding
+     * Runs when the view is destroyed. Required to avoid
+     * possible memory leak when using view binding.
      */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Runs when the fragment is destroyed. The BroadcastReceiver
+     * must be unregistered to avoid a memory leak.
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.unregisterReceiver(receiver)
     }
 
     /**
@@ -118,6 +128,9 @@ class ObservationStationsFragment : Fragment(), AnkoLogger {
     }
 }
 
+/**
+ * Adapter to handle displaying a list of observation stations
+ */
 private class StationAdapter(private var stations: ArrayList<ObservationStation.ObservationStationItem>) : RecyclerView.Adapter<StationAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(LayoutInflater.from(parent.context).inflate(

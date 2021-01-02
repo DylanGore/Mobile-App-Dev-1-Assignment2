@@ -1,5 +1,8 @@
 package ie.dylangore.mad1.assignment2.helpers
 
+/**
+ * A number of helper functions to format weather warnings
+ */
 object WarningFormatHelper {
     @Suppress("SpellCheckingInspection")
     // Map of region codes to region names

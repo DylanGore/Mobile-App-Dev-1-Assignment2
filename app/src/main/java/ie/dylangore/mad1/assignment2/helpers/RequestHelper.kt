@@ -8,87 +8,36 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Helper functions for requesting and processing data from the internet
+ */
 object RequestHelper: AnkoLogger {
 
-//    fun getMetEireannStations(): ArrayList<ObservationStation.ObservationStationItem>{
-//
-//        var result = mutableListOf<ObservationStation.ObservationStationItem>()
-//
-//        val  retrofit = Retrofit.Builder()
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .baseUrl("https://maps.stream.dylangore.space/api/latest/")
-//            .build()
-//
-//        val stationApi = retrofit.create(StationApi::class.java)
-//        val call: Call<ArrayList<ObservationStation.ObservationStationItem>> = stationApi.getMetEireannStations()
-//        try {
-//            call.enqueue(object : Callback<ArrayList<ObservationStation.ObservationStationItem>> {
-//                override fun onResponse(
-//                        call: Call<ArrayList<ObservationStation.ObservationStationItem>>,
-//                        response: Response<ArrayList<ObservationStation.ObservationStationItem>>
-//                ) {
-//                    result = processStationResponse(response)
-//                }
-//
-//                override fun onFailure(call: Call<ArrayList<ObservationStation.ObservationStationItem>>, t: Throwable) {
-//                    error("HTTP Failure")
-//                }
-//            })
-//        }catch (t: Throwable){
-//            error(t.message)
-//        }
-//
-//        return result as ArrayList<ObservationStation.ObservationStationItem>
-//    }
-//
-//    fun getWeatherWarnings(): ArrayList<Warning.WarningItem>{
-//
-//        var result = mutableListOf<Warning.WarningItem>()
-//
-//        val  retrofit = Retrofit.Builder()
-//            .addConverterFactory(GsonConverterFactory.create())
-////                .baseUrl("https://www.met.ie/Open_Data/json/")
-//            .baseUrl("https://ha.home.dylangore.space/local/testing/")
-//            .build()
-//
-//        val warningApi = retrofit.create(WarningsApi::class.java)
-//        val call: Call<ArrayList<Warning.WarningItem>> = warningApi.getWeatherWarnings()
-//        try {
-//            call.enqueue(object : Callback<ArrayList<Warning.WarningItem>> {
-//                override fun onResponse(
-//                    call: Call<ArrayList<Warning.WarningItem>>,
-//                    response: Response<ArrayList<Warning.WarningItem>>
-//                ) {
-//                    result = processWarningResponse(response)
-//                }
-//
-//                override fun onFailure(call: Call<ArrayList<Warning.WarningItem>>, t: Throwable) {
-//                    error("HTTP Failure")
-//                }
-//            })
-//        }catch (t: Throwable){
-//            error(t.message)
-//        }
-//        return result as ArrayList<Warning.WarningItem>
-//    }
+    // Define the base URLs for each API
+    private const val STATION_BASE_URL = "https://maps.stream.dylangore.space/api/latest/"
+    private const val WARNING_BASE_URL = "https://www.met.ie/Open_Data/json/"
 
+
+    /**
+     * Synchronous function to get data from the observation station API
+     */
     fun getMetEireannStationsSync(): ArrayList<ObservationStation.ObservationStationItem>{
 
         var result = mutableListOf<ObservationStation.ObservationStationItem>()
 
         val  retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://maps.stream.dylangore.space/api/latest/")
+            .baseUrl(STATION_BASE_URL)
             .build()
 
         val stationApi = retrofit.create(StationApi::class.java)
         val call: Call<ArrayList<ObservationStation.ObservationStationItem>> = stationApi.getMetEireannStations()
 
+        // Attempt to make a request to the API
         try {
             val response = call.execute()
             result = processStationResponse(response)
@@ -100,17 +49,20 @@ object RequestHelper: AnkoLogger {
         return result as ArrayList<ObservationStation.ObservationStationItem>
     }
 
+    /**
+     * Synchronous function to get data from the Met Éireann weather warning API
+     */
     fun getWeatherWarningsSync(): ArrayList<Warning.WarningItem>{
         var result = mutableListOf<Warning.WarningItem>()
         val  retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl("https://www.met.ie/Open_Data/json/")
-            .baseUrl("https://ha.home.dylangore.space/local/testing/")
+            .baseUrl(WARNING_BASE_URL)
             .build()
 
         val warningApi = retrofit.create(WarningsApi::class.java)
         val call: Call<ArrayList<Warning.WarningItem>> = warningApi.getWeatherWarnings()
 
+        // Attempt to make a request to the API
         try {
             val response = call.execute()
             result = processWarningResponse(response)
@@ -122,6 +74,9 @@ object RequestHelper: AnkoLogger {
         return  result as ArrayList<Warning.WarningItem>
     }
 
+    /**
+     * Process the received response from the weather warning API and return a list of weather warnings
+     */
     private fun processWarningResponse(response:  Response<ArrayList<Warning.WarningItem>>): ArrayList<Warning.WarningItem> {
         val result = mutableListOf<Warning.WarningItem>()
         for (item in response.body()!!){
@@ -153,6 +108,9 @@ object RequestHelper: AnkoLogger {
         return result as ArrayList<Warning.WarningItem>
     }
 
+    /**
+     * Process the received response from the station API and return a list of observation stations
+     */
     private fun processStationResponse(response:  Response<ArrayList<ObservationStation.ObservationStationItem>>): ArrayList<ObservationStation.ObservationStationItem> {
         val result = mutableListOf<ObservationStation.ObservationStationItem>()
         for (station in response.body()!!){

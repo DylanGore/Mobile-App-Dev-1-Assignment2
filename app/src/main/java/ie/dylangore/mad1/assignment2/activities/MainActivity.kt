@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var binding: ActivityMainBinding
 
+    /**
+     * Runs when the activity is created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         // Display a snack bar notification if the device is offline
         if (!NetworkHelper.isOnline(this.applicationContext)){
-            Snackbar.make(navView, "No network connection!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(navView, R.string.no_network, Snackbar.LENGTH_LONG).show()
         }
     }
 }
