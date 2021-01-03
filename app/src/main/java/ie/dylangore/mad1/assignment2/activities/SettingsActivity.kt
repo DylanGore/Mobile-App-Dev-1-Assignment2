@@ -36,7 +36,11 @@ class SettingsActivity : AppCompatActivity() {
             // Clear existing data
             app.locations.empty()
             // Add new location
-            app.locations.add(Location(-1, "WIT", 52.2461, 7.1387, 0))
+            app.locations.add(Location(-1, "Waterford, Ireland", 52.2583300, -7.1119400, 13))
+            app.locations.add(Location(-1, "New York, USA", 40.7142700, 74.0059700, 10))
+            app.locations.add(Location(-1, "Longyearbyen, Svalbard", 78.2233400, 15.6468900, 1713))
+            app.locations.add(Location(-1, "Sydney, Australia", -33.8678500, 151.2073200, 19))
+            app.locations.add(Location(-1, "Tokyo, Japan", 35.6895000, 139.6917100, 40))
 
             toast("Loaded sample data")
         }
