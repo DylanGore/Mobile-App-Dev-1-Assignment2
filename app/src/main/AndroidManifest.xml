@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather">
+        <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.ForecastActivity" />
         <activity android:name=".activities.WarningActivity" />
         <activity
@@ -23,7 +24,6 @@
             android:name=".services.StationRequestService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <service
             android:name=".services.ForecastRequestService"
             android:exported="true"

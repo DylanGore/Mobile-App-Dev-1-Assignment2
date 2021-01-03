@@ -43,4 +43,7 @@
     <string name="back">Back</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="title_settings">Settings</string>
+    <string name="settings_btn_delete_files">Delete all local JSON files</string>
+    <string name="settings_btn_load_example_data">Load Example Location Data</string>
 </resources>
