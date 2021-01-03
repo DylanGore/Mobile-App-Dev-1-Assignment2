@@ -23,6 +23,7 @@ import com.mapbox.mapboxsdk.utils.BitmapUtils
 import ie.dylangore.mad1.assignment2.BuildConfig
 import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.ActivityObservationStationBinding
+import ie.dylangore.mad1.assignment2.helpers.TimeHelper
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -75,7 +76,7 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
             )
             binding.stationLastUpdated.text = resources.getString(
                 R.string.station_last_updated,
-                station.time
+                TimeHelper.fromISO8601(station.time)
             )
 
             // Decode geohash
