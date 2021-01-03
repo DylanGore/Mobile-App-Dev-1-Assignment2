@@ -1,8 +1,11 @@
 package ie.dylangore.mad1.assignment2.helpers
 
+import android.content.Intent
+import android.widget.Toast
 import ie.dylangore.mad1.assignment2.api.ForecastApi
 import ie.dylangore.mad1.assignment2.api.StationApi
 import ie.dylangore.mad1.assignment2.api.WarningsApi
+import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Forecast
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import ie.dylangore.mad1.assignment2.models.Warning
@@ -45,6 +48,10 @@ object RequestHelper: AnkoLogger {
         // Attempt to make a request to the API
         try {
             val response = call.execute()
+            // Log the error if the response is unsuccessful
+            if(!response.isSuccessful){
+                error("Error while requesting stations: ${response.code()} ${response.message()}")
+            }
             result = processStationResponse(response)
         } catch (t: Throwable){
             error{t.message}
@@ -70,6 +77,10 @@ object RequestHelper: AnkoLogger {
         // Attempt to make a request to the API
         try {
             val response = call.execute()
+            // Log the error if the response is unsuccessful
+            if(!response.isSuccessful){
+                error("Error while requesting warnings: ${response.code()} ${response.message()}")
+            }
             result = processWarningResponse(response)
         } catch (t: Throwable){
             error(t.message)
@@ -83,8 +94,6 @@ object RequestHelper: AnkoLogger {
      * Synchronous function to get data from the Met Éireann weather warning API
      */
     fun getForecastSync(altitude: Int, latitude: Double, longitude: Double): Forecast? {
-        lateinit var result: Forecast
-
         // Create a custom HTTP client with a custom User-Agent as required by met.no
         val client = OkHttpClient.Builder().addNetworkInterceptor { chain ->
                 chain.proceed(chain.request().newBuilder().header("User-Agent", "KotlinWeather").build())
@@ -102,12 +111,15 @@ object RequestHelper: AnkoLogger {
         // Attempt to make a request to the API
         try {
             val response = call.execute()
-            result = response.body()!!
+            // Log the error if the response is unsuccessful
+            if(!response.isSuccessful){
+                error("Error while requesting forecast: ${response.code()} ${response.message()}")
+            }
+            return response.body()!!
         } catch (t: Throwable){
             info(t.message)
         }
-
-        return result
+        return null
     }
 
     /**
@@ -154,5 +166,4 @@ object RequestHelper: AnkoLogger {
         }
         return result as ArrayList<ObservationStation.ObservationStationItem>
     }
-
 }

@@ -48,6 +48,8 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger {
 //                    binding.layoutWarningsRefresh.isRefreshing = false
 
                     binding.forecastText.text = forecast.toString()
+                }else if (intent?.hasExtra("forecast_none")){
+                    binding.forecastText.text = "No data returned!"
                 }
             }
         }
