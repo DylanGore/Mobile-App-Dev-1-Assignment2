@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/location_name_hint"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textAutoComplete" />
 
             <EditText
                 android:id="@+id/location_latitude"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/location_latitude_hint"
-                android:inputType="numberDecimal" />
+                android:inputType="numberSigned|numberDecimal" />
 
             <EditText
                 android:id="@+id/location_longitude"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/location_longitude_hint"
-                android:inputType="numberDecimal" />
+                android:inputType="numberSigned|numberDecimal" />
 
             <EditText
                 android:id="@+id/location_altitude"
