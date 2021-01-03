@@ -68,11 +68,7 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
                 R.string.station_pressure,
                 station.pressure.toString()
             )
-            binding.stationWind.text = String.format(
-                resources.getString(R.string.station_wind),
-                station.wind_speed.toString(),
-                station.wind_direction_str
-            )
+            binding.stationWind.text = getString(R.string.station_wind, station.wind_speed.toString(), station.wind_direction_str)
             binding.stationWindGust.text = resources.getString(
                 R.string.station_wind_gust,
                 station.wind_gust.toString()

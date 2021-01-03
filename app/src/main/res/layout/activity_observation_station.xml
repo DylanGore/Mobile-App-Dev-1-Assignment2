@@ -1,89 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_observation_station"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+    android:paddingVertical="@dimen/activity_vertical_margin"
     tools:context=".activities.ObservationStationActivity">
-
 
     <TextView
         android:id="@+id/station_weather_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_weather_description" />
 
     <TextView
         android:id="@+id/station_temperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_temperature" />
 
     <TextView
         android:id="@+id/station_humidity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_humidity" />
 
     <TextView
         android:id="@+id/station_pressure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_pressure" />
 
     <TextView
         android:id="@+id/station_wind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_wind" />
 
     <TextView
         android:id="@+id/station_wind_gust"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_wind_gust" />
 
     <TextView
         android:id="@+id/station_last_updated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_last_updated" />
 
     <TextView
         android:id="@+id/station_geohash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_geohash" />
 
     <TextView
         android:id="@+id/station_latitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_latitude" />
 
     <TextView
         android:id="@+id/station_longitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_longitude" />
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/keyline_2"
         mapbox:mapbox_cameraTargetLat="-32.557013"
         mapbox:mapbox_cameraTargetLng="-56.149056"
         mapbox:mapbox_cameraZoom="5.526846">
-
-        <ImageView
-            android:id="@+id/station_marker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:visibility="gone" />
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </LinearLayout>

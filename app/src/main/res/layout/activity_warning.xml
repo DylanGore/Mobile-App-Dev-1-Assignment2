@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+    android:paddingVertical="@dimen/activity_vertical_margin"
     tools:context=".activities.WarningActivity">
 
     <ImageView
@@ -14,13 +15,15 @@
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_warning"/>
+        app:srcCompat="@drawable/ic_warning"
+        android:contentDescription="@string/warning_icon_description" />
 
     <TextView
         android:id="@+id/warning_level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/warning_level"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -28,8 +31,9 @@
         android:id="@+id/warning_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="4"
+        android:minLines="4"
         android:maxLines="12"
+        android:paddingTop="@dimen/keyline_2"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -37,32 +41,37 @@
         android:id="@+id/warning_regions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="2"
+        android:minLines="2"
         android:maxLines="8"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/warning_regions" />
 
     <TextView
         android:id="@+id/warning_issued"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/warning_issued" />
 
     <TextView
         android:id="@+id/warning_updated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/warning_updated" />
 
     <TextView
         android:id="@+id/warning_onset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/warning_onset" />
 
     <TextView
         android:id="@+id/warning_expiry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/keyline_2"
         android:text="@string/warning_expiry" />
 
 </LinearLayout>
