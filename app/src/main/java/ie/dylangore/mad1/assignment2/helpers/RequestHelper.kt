@@ -58,6 +58,10 @@ object RequestHelper: AnkoLogger {
         }
 
         info("Found ${result.size} stations")
+        
+        // Reverse the order as the data is in reverse-order from the API
+        result.reverse()
+
         return result as ArrayList<ObservationStation.ObservationStationItem>
     }
 
