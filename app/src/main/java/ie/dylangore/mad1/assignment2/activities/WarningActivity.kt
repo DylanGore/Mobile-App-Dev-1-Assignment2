@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.ActivityWarningBinding
+import ie.dylangore.mad1.assignment2.helpers.WarningFormatHelper
 import ie.dylangore.mad1.assignment2.models.Warning
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
 import java.util.*
 
 /**
@@ -35,16 +34,11 @@ class WarningActivity : AppCompatActivity(), AnkoLogger {
             title = warning.headline
 
             // Set icon color based on warning level
-            var iconColor = R.color.primaryColor
-            when(warning.level){
-                "yellow" -> iconColor = R.color.yellowWarning
-                "orange" -> iconColor = R.color.orangeWarning
-                "red" -> iconColor = R.color.redWarning
-            }
+            val iconColor = WarningFormatHelper.getWarningIconColor(warning)
 
             binding.warningLevel.text = resources.getString(R.string.warning_level, warning.level.capitalize(Locale.ROOT))
 
-            binding.warningIcon.setColorFilter(ContextCompat.getColor(this.applicationContext, iconColor), android.graphics.PorterDuff.Mode.SRC_IN);
+            binding.warningIcon.setColorFilter(ContextCompat.getColor(this.applicationContext, iconColor), android.graphics.PorterDuff.Mode.SRC_IN)
 
             // Display warning info
             binding.warningDescription.text = warning.description

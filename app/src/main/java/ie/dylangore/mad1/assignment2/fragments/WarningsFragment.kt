@@ -8,14 +8,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.activities.WarningActivity
 import ie.dylangore.mad1.assignment2.databinding.FragmentWarningsBinding
+import ie.dylangore.mad1.assignment2.helpers.WarningFormatHelper
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Warning
 import ie.dylangore.mad1.assignment2.services.WarningRequestService
@@ -173,11 +176,19 @@ private class WarningAdapter(private var Warnings: ArrayList<Warning.WarningItem
     private class MainHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(warning: Warning.WarningItem, listener: WarningListener){
             itemView.setOnClickListener{ listener.onWarningClick(warning) }
-            //val card : CardView = itemView.findViewById(R.id.list_card)
+
+            // Get view elements
+            val icon: ImageView = itemView.findViewById(R.id.list_card_icon)
             val cardTitle : TextView = itemView.findViewById(R.id.list_card_title)
             val cardDescription : TextView = itemView.findViewById(R.id.list_card_description)
-            // TODO modify color based on warning level
-            //card.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.primaryColor))
+
+            // Set warning icon
+            val iconColor = WarningFormatHelper.getWarningIconColor(warning)
+            icon.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_warning))
+            icon.setColorFilter(ContextCompat.getColor(itemView.context, iconColor), android.graphics.PorterDuff.Mode.SRC_IN)
+            icon.visibility = View.VISIBLE
+
+            // Set title and description
             cardTitle.text = warning.headline
             cardDescription.text = warning.description
             cardDescription.visibility = View.VISIBLE

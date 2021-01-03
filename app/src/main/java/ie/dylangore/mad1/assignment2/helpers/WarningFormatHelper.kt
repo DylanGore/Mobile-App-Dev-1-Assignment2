@@ -1,7 +1,10 @@
 package ie.dylangore.mad1.assignment2.helpers
 
+import ie.dylangore.mad1.assignment2.R
+import ie.dylangore.mad1.assignment2.models.Warning
+
 /**
- * A number of helper functions to format weather warnings
+ * A number of helper functions and variables to format weather warnings
  */
 object WarningFormatHelper {
     @Suppress("SpellCheckingInspection")
@@ -62,4 +65,19 @@ object WarningFormatHelper {
     val allCounties: List<String> = listOf("Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth",
             "Meath", "Offaly", "Westmeath", "Wexford", "Wicklow", "Clare", "Cork", "Kerry", "Limerick", "Tipperary",
             "Waterford", "Galway", "Leitrim", "Mayo", "Roscommon", "Sligo", "Cavan", "Donegal", "Monaghan")
+
+    /**
+     * Get the warning level color from a warning item
+     *
+     * @param warning the warning to get the level from
+     * @return the color of the warning
+     */
+    fun getWarningIconColor(warning: Warning.WarningItem): Int{
+        when(warning.level){
+            "yellow" -> return R.color.yellowWarning
+            "orange" -> return  R.color.orangeWarning
+            "red" -> return R.color.redWarning
+        }
+        return R.color.primaryColor
+    }
 }

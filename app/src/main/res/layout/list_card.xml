@@ -13,6 +13,7 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/keyline_4"
     android:visibility="gone"
+    android:layout_centerVertical="true"
     android:contentDescription="@string/list_icon_description" />
 
 <TextView
