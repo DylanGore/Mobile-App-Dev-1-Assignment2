@@ -12,7 +12,7 @@ interface LocationStore {
      *
      * @return a list of locations
      */
-    fun findAll(): List<Location>
+    fun findAll(): ArrayList<Location>
 
     /**
      * Get a single location by ID
