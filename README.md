@@ -1,5 +1,7 @@
 # Mobile App Development 1: Assignment 2
 
+![Build Status](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/workflows/Test,%20Build%20and%20Create%20Release/badge.svg)
+
 This is a Kotlin-based weather app for Android.
 
 [View Releases](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/releases)
@@ -12,6 +14,7 @@ This is a Kotlin-based weather app for Android.
 -   Save and load a list of locations to/from a JSON file
 -   [MapBox](https://mapbox.com) maps to view and choose locations (User location permission can be granted if desired)
 -   The option to add observation stations as saved locations or just view a weather forecast for that area
+-   Automated testing, linting and APK building using GitHub actions
 
 ## Android / Material Design Notable Features
 
