@@ -24,6 +24,7 @@ import ie.dylangore.mad1.assignment2.models.Location
 import ie.dylangore.mad1.assignment2.services.ForecastRequestService
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.toast
 import java.util.*
 
 /**
@@ -55,12 +56,18 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
                 if(intent?.hasExtra("forecast")!!){
                     forecast = intent.extras?.getParcelable<Forecast>("forecast")!!
                     info("Forecast Broadcast Received")
-//                    binding.layoutWarningsRefresh.isRefreshing = false
                     updateForecastDisplay()
                 }else if (intent.hasExtra("forecast_none")){
-//                    binding.forecastText.text = "No data returned!"
+                    toast(resources.getString(R.string.empty_text_forecast))
                 }
+                binding.layoutForecastRefresh.isRefreshing = false
             }
+        }
+
+        // Handle the pull to refresh action
+        binding.layoutForecastRefresh.setOnRefreshListener {
+            refreshForecast()
+            Toast.makeText(this, "Refreshing forecast data", Toast.LENGTH_SHORT).show()
         }
 
         // Register the broadcast receiver
@@ -109,6 +116,8 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
             setResult(RESULT_CANCELED)
             finish()
         }
+
+        checkIfEmpty()
     }
 
     /**
@@ -148,6 +157,8 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
         // Setup the RecyclerView and Adapter
         recyclerView.adapter = ForecastAdapter(forecast.properties.timeseries as ArrayList<Forecast.TimeSeries>, this)
         recyclerView.adapter?.notifyDataSetChanged()
+
+        checkIfEmpty()
     }
 
     private fun updateLocationDetails(newLocation: Location){
@@ -179,6 +190,23 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
         // location
         intent.putExtra("forecast_location", location)
         startActivityForResult(intent, 0)
+    }
+
+    /**
+     * Checks if the list of locations is empty. If it is,
+     * display a view stating that.
+     */
+    private fun checkIfEmpty(){
+        val recyclerView = binding.recyclerViewForecast
+        val emptyLayout = binding.layoutEmptyForecast
+        // Display a TextView if the list is empty
+        if (this::forecast.isInitialized){
+            emptyLayout.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        }else{
+            emptyLayout.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        }
     }
 }
 

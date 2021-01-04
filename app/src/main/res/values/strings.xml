@@ -69,4 +69,5 @@
     <string name="zoom_in">Zoom In</string>
     <string name="zoom_out">Zoom Out</string>
     <string name="location_picker_btn_select">Select location</string>
+    <string name="empty_text_forecast">No forecast data found!</string>
 </resources>
