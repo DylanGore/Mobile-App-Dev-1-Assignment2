@@ -1,14 +1,16 @@
 package ie.dylangore.mad1.assignment2.models.storage
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import ie.dylangore.mad1.assignment2.helpers.FileHelper
+import ie.dylangore.mad1.assignment2.helpers.ValidationHelper
 import ie.dylangore.mad1.assignment2.models.Location
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import org.jetbrains.anko.error
 import java.lang.reflect.Type
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -16,9 +18,8 @@ import kotlin.collections.ArrayList
  *
  * @property context Android application context
  */
-class LocationJSONStore(private val context: Context): LocationStore {
+class LocationJSONStore(private val context: Context, private val jsonFile: String = "locations.json"): LocationStore, AnkoLogger {
 
-    private val jsonFile = "locations.json"
     private val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting().create()
     private val listType: Type = object : TypeToken<java.util.ArrayList<Location>>() {}.type
 
@@ -70,13 +71,13 @@ class LocationJSONStore(private val context: Context): LocationStore {
      */
     override fun add(location: Location) {
         location.id = getId()
-//        if (ValidationHelper.validateLocation(location)){
+        if (ValidationHelper.validateLocation(location)){
             locations.add(location)
             serialize()
-            Log.i("LocationJSONStore","New location added: $location")
-//        }else{
-//            Log.e("LocationJSONStore", "Location not added: invalid location data")
-//        }
+            info("New location added: $location")
+        }else{
+            error( "Location not added: invalid location data")
+        }
     }
 
     /**
@@ -86,16 +87,22 @@ class LocationJSONStore(private val context: Context): LocationStore {
      */
     override fun update(location: Location) {
         val foundLocation = findOne(location.id)
-        if (foundLocation != null){
-            Log.i("LocationJSONStore","Updating location: $location")
+        if (foundLocation != null) {
+            info("Updating location: $location")
             foundLocation.name = location.name
             foundLocation.latitude = location.latitude
             foundLocation.longitude = location.longitude
             foundLocation.altitude = location.altitude
+            // Validate the updated location
+            if (ValidationHelper.validateLocation(foundLocation)){
             // Save the updated list to the JSON file
-            serialize()
+                serialize()
+            }
+            else{
+                error( "Location with ID ${location.id} not added: invalid location data")
+           }
         }else{
-            Log.e("LocationJSONStore","Location with ID ${location.id} not found, nothing to update")
+            error("Location with ID ${location.id} not found, nothing to update")
         }
     }
 
@@ -107,12 +114,12 @@ class LocationJSONStore(private val context: Context): LocationStore {
     override fun delete(id: Long) {
         val location = findOne(id)
         if (location != null){
-            Log.i("LocationJSONStore","Deleting location: $location")
+            info("Deleting location: $location")
             locations.remove(location)
             // Save the updated list to the JSON file
             serialize()
         }else{
-            Log.e("LocationJSONStore","Location with ID $id not found, nothing to delete")
+            error("Location with ID $id not found, nothing to delete")
         }
     }
 

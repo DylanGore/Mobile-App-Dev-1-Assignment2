@@ -81,7 +81,7 @@ object FileHelper {
     fun delete(context: Context, fileName: String){
         // Delete the file if it exists
         if (exists(context, fileName)){
-            val file = File(fileName)
+            val file = File(context.filesDir, fileName)
             file.delete()
             Log.i("LocationJSONStore", "File $fileName deleted")
         }else{
