@@ -1,7 +1,15 @@
 # Mobile App Development 1: Assignment 2
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=for-the-badge)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DylanGore/Mobile-App-Dev-1-Assignment2/Test,%20Build%20and%20Create%20Release?label=Build&style=for-the-badge)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/DylanGore/Mobile-App-Dev-1-Assignment2?label=Latest%20Release&style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DylanGore/Mobile-App-Dev-1-Assignment2?label=Code%20Size&style=for-the-badge)
+
+![Minimum Android Version](https://img.shields.io/badge/Minimum%20Version-8.0%20Oreo%20--%20API%20Level%2026-3DDC84?logo=android&style=for-the-badge)
+![Target Android Version](https://img.shields.io/badge/Target%20Version-11.0%20--%20API%20Level%2030-3DDC84?logo=android&style=for-the-badge)
 
 ![Build Status](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/workflows/Test,%20Build%20and%20Create%20Release/badge.svg)
 
