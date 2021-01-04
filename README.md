@@ -1,4 +1,7 @@
 # Mobile App Development 1: Assignment 2
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![Build Status](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/workflows/Test,%20Build%20and%20Create%20Release/badge.svg)
 
@@ -69,3 +72,23 @@ For more details on where to get the required tokens, see the [MapBox Android In
 -   [Retrofit](https://square.github.io/retrofit/)
 -   [Retrofit — Synchronous and Asynchronous Requests](https://futurestud.io/tutorials/retrofit-synchronous-and-asynchronous-requests)
 -   [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions)
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://dylangore.ie"><img src="https://avatars1.githubusercontent.com/u/2760449?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dylan Gore</b></sub></a><br /><a href="https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/commits?author=DylanGore" title="Tests">⚠️</a> <a href="https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/commits?author=DylanGore" title="Code">💻</a> <a href="#maintenance-DylanGore" title="Maintenance">🚧</a> <a href="#ideas-DylanGore" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-DylanGore" title="Project Management">📆</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
