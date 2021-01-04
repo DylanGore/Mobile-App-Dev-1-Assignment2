@@ -19,7 +19,6 @@ jobs:
       - name: Create gradle.properties
         run: |
           mkdir -p ~/.gradle/
-          echo "::set-env name=GRADLE_USER_HOME::$HOME/.gradle"
           echo "MAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOAD_TOKEN }}" >> ~/.gradle/gradle.properties
           echo "MAPBOX_ACCESS_TOKEN=\"${{ secrets.MAPBOX_ACCESS_TOKEN }}\";" >> ~/.gradle/gradle.properties
       - name: Run unit tests
