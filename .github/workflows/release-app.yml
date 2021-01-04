@@ -19,12 +19,18 @@ jobs:
       - name: Create .gradle directory if needed
         run: |
           mkdir ~/.gradle
-      - name: Write gradle.properties file
+      - name: Add MapBox Downloads Token to gradle.properties
         uses: DamianReeves/write-file-action@v1.0
         with:
           path: ~/.gradle/gradle.properties
           contents: |
-            echo "MAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}"
+            echo "MAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOAD_TOKEN }}"
+          write-mode: append
+      - name: Add MapBox Access Token to gradle.properties
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: ~/.gradle/gradle.properties
+          contents: |
             echo "MAPBOX_ACCESS_TOKEN=\"${{ secrets.MAPBOX_ACCESS_TOKEN }}\";"
           write-mode: append
       - name: Run unit tests
