@@ -1,7 +1,13 @@
 name: Test and Build App
-on: [pull_request, push, workflow_dispatch]
+on: 
+  push:
+    branches:
+      - main
+      - github-actions
+  pull_request:
+
 jobs:
-  build:
+  test-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -23,8 +29,6 @@ jobs:
           echo "MAPBOX_ACCESS_TOKEN=\"${{ secrets.MAPBOX_ACCESS_TOKEN }}\";" >> ~/.gradle/gradle.properties
       - name: Run unit tests
         run: ./gradlew test --stacktrace
-      - name: "Run implementation tests"
-        uses: vgaidarji/android-github-actions-emulator@v1.0.1
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
       - name: Upload APK
