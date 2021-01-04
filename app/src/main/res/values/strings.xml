@@ -61,4 +61,6 @@
     <string name="forecast_details_wind_speed">Wind Speed: %1$s</string>
     <string name="forecast_details_cloud">Cloud Cover: %1$s</string>
     <string name="title_forecast">Forecast: %1$s</string>
+    <string name="title_location_picker">Choose a location</string>
+    <string name="location_map_button_text">Pick Location From Map</string>
 </resources>

@@ -1,5 +1,6 @@
 package ie.dylangore.mad1.assignment2.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -169,6 +170,13 @@ class LocationActivity : AppCompatActivity() {
 //            // Display the alert
 //            alert.show()
 //        }
+
+        // Map Button
+        binding.locationBtnLocationPicker.setOnClickListener {
+            val intent = Intent(this, LocationPickerActivity::class.java)
+            intent.putExtra("location", location)
+            startActivityForResult(intent, 0)
+        }
     }
 
     /**
@@ -191,5 +199,18 @@ class LocationActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when(resultCode){
+            RESULT_OK -> {
+                if (data != null) {
+                    val location = data.extras?.getParcelable<Location>("location")!!
+                    binding.locationLatitude.setText(location.latitude.toString())
+                    binding.locationLongitude.setText(location.longitude.toString())
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
