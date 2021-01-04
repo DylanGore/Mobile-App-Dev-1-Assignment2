@@ -16,10 +16,13 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Create .gradle directory if needed
+        run: |
+          mkdir ~/.gradle
       - name: Write gradle.properties file
         uses: DamianReeves/write-file-action@v1.0
         with:
-          path: ${{ env.home}}/.gradle/gradle.properties
+          path: ~/.gradle/gradle.properties
           contents: |
             echo "MAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}"
             echo "MAPBOX_ACCESS_TOKEN=\"${{ secrets.MAPBOX_ACCESS_TOKEN }}\";"
