@@ -39,5 +39,6 @@ jobs:
       - name: Upload APK as job artifact
         uses: actions/upload-artifact@v1
         with:
+          name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 14
