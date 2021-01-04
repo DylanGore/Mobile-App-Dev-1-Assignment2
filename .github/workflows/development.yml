@@ -1,14 +1,11 @@
-name: Test and Build App
+name: Lint & Test Code
 on: 
   push:
-    branches:
+    branches-ignore:
       - main
-    tags-ignore:
-      - '*.*'
-  pull_request:
 
 jobs:
-  test-build:
+  test-build-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -37,13 +34,3 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew test --stacktrace
-
-      - name: Build debug APK
-        run: bash ./gradlew assembleDebug --stacktrace
-
-      - name: Upload APK as job artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 14
