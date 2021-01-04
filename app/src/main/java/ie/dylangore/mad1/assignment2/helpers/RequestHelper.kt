@@ -25,8 +25,8 @@ object RequestHelper: AnkoLogger {
 
     // Define the base URLs for each API
     private const val STATION_BASE_URL = "https://maps.stream.dylangore.space/api/latest/"
-//    private const val WARNING_BASE_URL = "https://www.met.ie/Open_Data/json/"
-    private const val WARNING_BASE_URL = "https://ha.home.dylangore.space/local/testing/"
+    private const val WARNING_BASE_URL = "https://www.met.ie/Open_Data/json/"
+    private const val WARNING_BASE_URL_TEST = "https://ha.home.dylangore.space/local/testing/"
     private const val FORECAST_BASE_URL = "https://api.met.no/weatherapi/locationforecast/2.0/"
 
 
@@ -74,6 +74,35 @@ object RequestHelper: AnkoLogger {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(WARNING_BASE_URL)
             .build()
+
+        val warningApi = retrofit.create(WarningsApi::class.java)
+        val call: Call<ArrayList<Warning.WarningItem>> = warningApi.getWeatherWarnings()
+
+        // Attempt to make a request to the API
+        try {
+            val response = call.execute()
+            // Log the error if the response is unsuccessful
+            if(!response.isSuccessful){
+                error("Error while requesting warnings: ${response.code()} ${response.message()}")
+            }
+            result = processWarningResponse(response)
+        } catch (t: Throwable){
+            error(t.message)
+        }
+        info("Found ${result.size} warnings")
+
+        return  result as ArrayList<Warning.WarningItem>
+    }
+
+    /**
+     * Synchronous function to get data from a test API
+     */
+    fun getWeatherWarningsTestSync(): ArrayList<Warning.WarningItem>{
+        var result = mutableListOf<Warning.WarningItem>()
+        val  retrofit = Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(WARNING_BASE_URL_TEST)
+                .build()
 
         val warningApi = retrofit.create(WarningsApi::class.java)
         val call: Call<ArrayList<Warning.WarningItem>> = warningApi.getWeatherWarnings()

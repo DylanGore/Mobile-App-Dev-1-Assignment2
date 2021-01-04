@@ -80,6 +80,23 @@
         android:paddingTop="@dimen/keyline_2"
         android:text="@string/station_longitude" />
 
+    <Button
+        android:id="@+id/station_btn_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_4"
+        android:layout_marginStart="@dimen/keyline_4"
+        android:layout_marginEnd="@dimen/keyline_4"
+        android:text="@string/station_btn_get_forecast" />
+
+    <Button
+        android:id="@+id/station_btn_add_as_loc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_4"
+        android:layout_marginEnd="@dimen/keyline_4"
+        android:text="@string/station_btn_add_as_loc" />
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"

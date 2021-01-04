@@ -66,7 +66,12 @@ class ObservationStationsFragment : Fragment(), AnkoLogger, StationListener, Sea
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentObservationStationsBinding.inflate(inflater, container, false)
 
+        // Show the refresh icon initially
+        binding.layoutStationsRefresh.isRefreshing = true
+
+        // Required to add search icon
         setHasOptionsMenu(true)
+
         // Update the RecyclerView initially with an empty list to avoid an error in the logs
         updateStationsList()
 

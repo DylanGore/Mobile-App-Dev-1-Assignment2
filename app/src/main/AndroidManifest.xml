@@ -17,7 +17,7 @@
         <activity android:name=".activities.LocationPickerActivity" />
         <activity android:name=".activities.ForecastDetailsActivity" />
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.ForecastActivity" />
+        <activity android:name=".activities.LocationDetailsActivity" />
         <activity android:name=".activities.WarningActivity" />
         <activity
             android:name=".activities.ObservationStationActivity"
@@ -37,7 +37,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
-            android:name=".activities.LocationActivity"
+            android:name=".activities.AddEditLocationActivity"
             android:label="@string/title_add_location" />
         <activity
             android:name=".activities.MainActivity"

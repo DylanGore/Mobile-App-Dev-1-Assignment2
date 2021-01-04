@@ -8,14 +8,13 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
-import ie.dylangore.mad1.assignment2.databinding.ActivityForecastBinding
+import ie.dylangore.mad1.assignment2.databinding.ActivityLocationDetailsBinding
 import ie.dylangore.mad1.assignment2.helpers.ForecastHelper
 import ie.dylangore.mad1.assignment2.helpers.TimeHelper
 import ie.dylangore.mad1.assignment2.main.MainApp
@@ -30,10 +29,10 @@ import java.util.*
 /**
  * The activity used to view weather forecast details
  */
-class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
+class LocationDetailsActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
 
     private lateinit var app: MainApp
-    private lateinit var binding: ActivityForecastBinding
+    private lateinit var binding: ActivityLocationDetailsBinding
     private lateinit var receiver : BroadcastReceiver
     private lateinit var location: Location
     private lateinit var forecast: Forecast
@@ -44,8 +43,11 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as MainApp
-        binding = ActivityForecastBinding.inflate(layoutInflater)
+        binding = ActivityLocationDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Show the refresh icon initially
+        binding.layoutForecastRefresh.isRefreshing = true
 
         // Set the layout of the RecyclerView
         binding.recyclerViewForecast.layoutManager = LinearLayoutManager(this)
@@ -67,7 +69,7 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
         // Handle the pull to refresh action
         binding.layoutForecastRefresh.setOnRefreshListener {
             refreshForecast()
-            Toast.makeText(this, "Refreshing forecast data", Toast.LENGTH_SHORT).show()
+            toast(resources.getString(R.string.refreshing_forecast))
         }
 
         // Register the broadcast receiver
@@ -77,7 +79,7 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
 
         // Edit button
         binding.forecastEditLocationButton.setOnClickListener {
-            val intent = Intent(this, LocationActivity::class.java)
+            val intent = Intent(this, AddEditLocationActivity::class.java)
             // Pass the selected location data through to the activity
             intent.putExtra("location_edit", location)
             startActivityForResult(intent, 0)
@@ -92,23 +94,29 @@ class ForecastActivity : AppCompatActivity(), AnkoLogger, ForecastListener {
             // Yes button
             alert.setPositiveButton(R.string.yes) { _, _ ->
                 app.locations.delete(location.id) // Delete the location from the store
-                Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
+                toast(resources.getString(R.string.deleted, location.name))
                 setResult(RESULT_OK)
                 finish()
             }
 
             // No button
             alert.setNegativeButton(R.string.no) { _, _ ->
-                setResult(RESULT_CANCELED)
-                finish()
+                // Do nothing
             }
 
             // Display the alert
             alert.show()
         }
 
+        // Get location data passed from parent
         if (intent.hasExtra("location")) {
             location = intent.extras?.getParcelable("location")!!
+
+            // If displaying a forecast for an observation station (id -1) hide the edit/delete location buttons
+            if (location.id <= 0){
+                binding.forecastDeleteLocationButton.isEnabled = false
+                binding.forecastEditLocationButton.isEnabled = false
+            }
 
             updateLocationDetails(location)
         }else{

@@ -79,8 +79,10 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        info { "Re-creating MainActivity..." }
-        // Re-create the current activity (to load in changes made in setting activity)
-        this.recreate()
+        if (resultCode == 100){
+            info { "Re-creating MainActivity..." }
+            // Re-create the current activity (to load in changes made in setting activity)
+            this.recreate()
+        }
     }
 }

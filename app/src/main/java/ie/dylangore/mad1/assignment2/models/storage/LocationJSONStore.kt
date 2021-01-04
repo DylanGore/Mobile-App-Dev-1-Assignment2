@@ -8,6 +8,8 @@ import com.google.gson.reflect.TypeToken
 import ie.dylangore.mad1.assignment2.helpers.FileHelper
 import ie.dylangore.mad1.assignment2.models.Location
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Class that manages storing location data in memory
@@ -49,6 +51,16 @@ class LocationJSONStore(private val context: Context): LocationStore {
      */
     override fun findOne(id: Long): Location? {
         return locations.find { it.id == id}
+    }
+
+    /**
+     * Get a single location by name
+     *
+     * @param name the name of the location to find
+     * @return the Location object with the given name
+     */
+    override fun findOneByName(name: String): Location? {
+        return locations.find { it.name.equals(name, ignoreCase = true) }
     }
 
     /**

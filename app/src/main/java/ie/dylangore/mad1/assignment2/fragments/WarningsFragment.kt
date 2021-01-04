@@ -66,12 +66,11 @@ class WarningsFragment : Fragment(), AnkoLogger, WarningListener {
     /**
      * Runs when the view is created, any GUI-related init should be done here.
      */
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentWarningsBinding.inflate(inflater, container, false)
+
+        // Show the refresh icon initially
+        binding.layoutWarningsRefresh.isRefreshing = true
 
         // Update the RecyclerView initially with an empty list to avoid an error in the logs
         updateWarningsList()
@@ -132,6 +131,7 @@ class WarningsFragment : Fragment(), AnkoLogger, WarningListener {
      */
     private fun refreshWarnings(){
         val intent = Intent(this.activity, WarningRequestService::class.java)
+        intent.putExtra("warning_test_api", app.useWarningTestAPI)
         WarningRequestService.enqueueWork(this.requireContext(), intent)
     }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/activity_horizontal_margin"
     android:paddingVertical="@dimen/activity_vertical_margin"
-    tools:context=".activities.LocationActivity">
+    tools:context=".activities.AddEditLocationActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -87,15 +87,6 @@
                 android:layout_marginEnd="@dimen/keyline_4"
                 android:text="@string/location_add_button_text" />
 
-            <Button
-                android:id="@+id/location_delete_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/keyline_4"
-                android:layout_marginStart="@dimen/keyline_4"
-                android:layout_marginEnd="@dimen/keyline_4"
-                android:text="@string/location_delete_button_text"
-                tools:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

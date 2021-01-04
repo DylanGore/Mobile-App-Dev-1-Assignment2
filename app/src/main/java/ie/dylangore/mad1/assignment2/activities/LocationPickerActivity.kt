@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -103,7 +104,12 @@ class LocationPickerActivity : AppCompatActivity(), AnkoLogger, OnMapReadyCallba
      * @param mapboxMap the map view
      */
     override fun onMapReady(mapboxMap: MapboxMap) {
-        mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+
+        // Set map theme depending of device display mode
+        var mapTheme = Style.MAPBOX_STREETS
+        if(isDarkModeOn()) mapTheme = Style.DARK
+
+        mapboxMap.setStyle(mapTheme) {
             this.mapboxMap = mapboxMap
             val uiSettings = mapboxMap.uiSettings
 
@@ -187,5 +193,13 @@ class LocationPickerActivity : AppCompatActivity(), AnkoLogger, OnMapReadyCallba
     private fun changeMapPosition(lat: Double = mapboxMap.cameraPosition.target.latitude, lon: Double = mapboxMap.cameraPosition.target.longitude, zoom: Double = 9.0, duration: Int = 2000){
         val position = CameraPosition.Builder().target(LatLng(lat, lon)).zoom(zoom).tilt(0.0).build()
         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), duration)
+    }
+
+    /**
+     * Check if the device is running in dark mode or not
+     */
+    private fun isDarkModeOn(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 }

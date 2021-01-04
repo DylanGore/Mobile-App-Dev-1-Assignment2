@@ -33,6 +33,16 @@ class LocationMemoryStore: LocationStore, AnkoLogger {
     }
 
     /**
+     * Get a single location by name
+     *
+     * @param name the name of the location to find
+     * @return the Location object with the given name
+     */
+    override fun findOneByName(name: String): Location? {
+        return locations.find { it.name.equals(name, ignoreCase = true) }
+    }
+
+    /**
      * Add a new location
      *
      * @param location the new location to add

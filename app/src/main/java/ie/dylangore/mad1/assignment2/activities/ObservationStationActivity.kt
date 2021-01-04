@@ -1,5 +1,6 @@
 package ie.dylangore.mad1.assignment2.activities
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
@@ -24,9 +25,12 @@ import ie.dylangore.mad1.assignment2.BuildConfig
 import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.ActivityObservationStationBinding
 import ie.dylangore.mad1.assignment2.helpers.TimeHelper
+import ie.dylangore.mad1.assignment2.main.MainApp
+import ie.dylangore.mad1.assignment2.models.Location
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.toast
 
 
 /**
@@ -34,8 +38,11 @@ import org.jetbrains.anko.info
  */
 class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
 
+    private lateinit var app:MainApp
     private lateinit var binding:ActivityObservationStationBinding
     private lateinit var coordinates: LatLong
+    private lateinit var station: ObservationStation.ObservationStationItem
+    private lateinit var stationAsLocation: Location
 
     /**
      * Runs when the activity is created
@@ -44,10 +51,12 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, BuildConfig.MapboxAccessToken) // this must be done before the layout is inflated
         binding = ActivityObservationStationBinding.inflate(layoutInflater)
+        app = application as MainApp
         setContentView(binding.root)
 
+        // Get the station details passed by the parent activity
         if (intent.hasExtra("station_view")) {
-            val station : ObservationStation.ObservationStationItem = intent.extras?.getParcelable("station_view")!!
+            station = intent.extras?.getParcelable("station_view")!!
 
             // Set the title to the station name
             title = station.location
@@ -96,10 +105,26 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
                 R.string.station_longitude,
                 coordinates.lon.toString()
             )
+
+            createLocalLocation()
         }else{
             // If no data was passed to the activity, end it
             setResult(RESULT_CANCELED)
             finish()
+        }
+
+        // Get forecast button
+        binding.stationBtnForecast.setOnClickListener {
+            val intent = Intent(this, LocationDetailsActivity::class.java)
+            intent.putExtra("location", stationAsLocation)
+            startActivityForResult(intent, 0)
+        }
+
+        // Add as location button
+        binding.stationBtnAddAsLoc.setOnClickListener {
+            app.locations.add(stationAsLocation)
+            toast(resources.getString(R.string.location_added, station.location))
+            binding.stationBtnAddAsLoc.isEnabled = false
         }
 
         // Create a marker and symbol layer for the map
@@ -156,5 +181,24 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
     private fun isDarkModeOn(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        createLocalLocation()
+    }
+
+    private fun createLocalLocation(){
+        // Disable the add as location button if a saved location already
+        // exists with the same name
+        if (app.locations.findOneByName(station.location) != null){
+            binding.stationBtnAddAsLoc.isEnabled = false
+
+            // Get existing location from list
+            stationAsLocation = app.locations.findOneByName(station.location)!!
+        }else{
+            // Create a location object for the station
+            stationAsLocation = Location(-1, station.location, coordinates.lat, coordinates.lon, 0)
+        }
     }
 }

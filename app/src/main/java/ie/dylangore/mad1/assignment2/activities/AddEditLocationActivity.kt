@@ -4,23 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ie.dylangore.mad1.assignment2.R
-import ie.dylangore.mad1.assignment2.databinding.ActivityLocationBinding
+import ie.dylangore.mad1.assignment2.databinding.ActivityAddEditLocationBinding
 import ie.dylangore.mad1.assignment2.helpers.ValidationHelper
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Location
+import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
 /**
  * The activity used to add/edit a location
  */
-class LocationActivity : AppCompatActivity() {
+class AddEditLocationActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var app: MainApp
-    private lateinit var binding: ActivityLocationBinding
+    private lateinit var binding: ActivityAddEditLocationBinding
     private var location = Location()
     private var editMode = false
 
@@ -30,11 +30,8 @@ class LocationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as MainApp
-        binding = ActivityLocationBinding.inflate(layoutInflater)
+        binding = ActivityAddEditLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Show the delete button TODO: hidden for now, see below
-         binding.locationDeleteButton.visibility = View.GONE
 
         if (intent.hasExtra("location_edit")) {
             editMode = true
@@ -130,10 +127,10 @@ class LocationActivity : AppCompatActivity() {
             if (!invalid){
                 if(editMode){
                     app.locations.update(location)
-                    Toast.makeText(this, "Updated ${location.name}", Toast.LENGTH_SHORT).show()
+                    toast(resources.getString(R.string.updated, location.name))
                 }else{
                     app.locations.add(location.copy())
-                    Toast.makeText(this, "Added ${location.name} to list!", Toast.LENGTH_SHORT).show()
+                    toast(resources.getString(R.string.location_added, location.name))
                 }
 
                 // Close the activity
@@ -145,31 +142,6 @@ class LocationActivity : AppCompatActivity() {
 
 
         }
-
-        // Delete Button
-//        TODO This function is currently handled by the ForecastActivity
-//        binding.locationDeleteButton.setOnClickListener {
-//            // Create an alert dialog to ask the user to confirm deletion
-//            val alert = AlertDialog.Builder(this)
-//            alert.setTitle(R.string.title_location_delete_confirmation)
-//
-//            // Yes button
-//            alert.setPositiveButton(R.string.yes) { _, _ ->
-//                app.locations.delete(location.id) // Delete the location from the store
-//                Toast.makeText(this, "Deleted ${location.name}", Toast.LENGTH_SHORT).show()
-//                setResult(RESULT_OK)
-//                finish()
-//            }
-//
-//            // No button
-//            alert.setNegativeButton(R.string.no) { _, _ ->
-//                setResult(RESULT_CANCELED)
-//                finish()
-//            }
-//
-//            // Display the alert
-//            alert.show()
-//        }
 
         // Map Button
         binding.locationBtnLocationPicker.setOnClickListener {
@@ -183,7 +155,7 @@ class LocationActivity : AppCompatActivity() {
      * Create the top menu buttons
      */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add_location, menu)
+        menuInflater.inflate(R.menu.menu_back, menu)
         return true
     }
 
@@ -192,14 +164,14 @@ class LocationActivity : AppCompatActivity() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.location_item_cancel -> {
-                toast("Cancelled")
+            R.id.menu_option_back -> {
                 setResult(RESULT_CANCELED)
                 finish()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when(resultCode){

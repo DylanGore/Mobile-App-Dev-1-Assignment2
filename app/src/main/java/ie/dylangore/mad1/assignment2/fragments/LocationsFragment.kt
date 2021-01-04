@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.dylangore.mad1.assignment2.R
-import ie.dylangore.mad1.assignment2.activities.ForecastActivity
-import ie.dylangore.mad1.assignment2.activities.LocationActivity
+import ie.dylangore.mad1.assignment2.activities.AddEditLocationActivity
+import ie.dylangore.mad1.assignment2.activities.LocationDetailsActivity
 import ie.dylangore.mad1.assignment2.databinding.FragmentLocationsBinding
 import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Location
@@ -51,7 +51,7 @@ class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
         // Handle the Add Location FAB
         binding.fabAddLocation.setOnClickListener {
             // Start the LocationActivity
-            val intent = Intent(activity, LocationActivity::class.java)
+            val intent = Intent(activity, AddEditLocationActivity::class.java)
             startActivityForResult(intent, 0)
         }
 
@@ -111,7 +111,7 @@ class LocationsFragment : Fragment(), LocationListener, AnkoLogger {
      * list is clicked on.
      */
     override fun onLocationClick(location: Location) {
-        val intent = Intent(activity, ForecastActivity::class.java)
+        val intent = Intent(activity, LocationDetailsActivity::class.java)
         // Pass the selected location data through to the activity
         intent.putExtra("location", location)
         startActivityForResult(intent, 0)

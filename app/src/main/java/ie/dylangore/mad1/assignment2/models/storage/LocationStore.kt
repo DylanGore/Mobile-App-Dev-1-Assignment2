@@ -23,6 +23,14 @@ interface LocationStore {
     fun findOne(id: Long): Location?
 
     /**
+     * Get a single location by name
+     *
+     * @param name the name of the location to find
+     * @return the Location object with the given name
+     */
+    fun findOneByName(name: String): Location?
+
+    /**
      * Add a new location
      *
      * @param location the new location to add
