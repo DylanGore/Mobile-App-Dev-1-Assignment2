@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "DylanGore",
+      "name": "Dylan Gore",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2760449?v=4",
+      "profile": "https://dylangore.ie",
+      "contributions": [
+        "test",
+        "code",
+        "maintenance",
+        "ideas",
+        "projectManagement"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Mobile-App-Dev-1-Assignment2",
+  "projectOwner": "DylanGore",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
