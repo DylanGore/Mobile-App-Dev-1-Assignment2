@@ -63,4 +63,10 @@
     <string name="title_forecast">Forecast: %1$s</string>
     <string name="title_location_picker">Choose a location</string>
     <string name="location_map_button_text">Pick Location From Map</string>
+    <string name="location_permission_denied">Location Permission Denied!</string>
+    <string name="location_picker_crosshair">Location Picker Crosshair</string>
+    <string name="get_device_location">Get device location</string>
+    <string name="zoom_in">Zoom In</string>
+    <string name="zoom_out">Zoom Out</string>
+    <string name="location_picker_btn_select">Select location</string>
 </resources>

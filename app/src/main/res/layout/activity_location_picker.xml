@@ -22,7 +22,45 @@
             android:scaleX="2"
             android:scaleY="2"
             app:tint="@color/primaryColor"
-            app:srcCompat="@drawable/ic_add" />
+            app:srcCompat="@drawable/ic_add"
+            android:contentDescription="@string/location_picker_crosshair" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/location_picker_btn_locate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginHorizontal="@dimen/keyline_4"
+            android:layout_marginBottom="64dp"
+            android:src="@drawable/ic_my_location"
+            android:contentDescription="@string/get_device_location">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/keyline_2"
+            android:layout_gravity="top|end">
+
+            <ImageButton
+                android:id="@+id/location_picker_btn_zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_zoom_in"
+                app:tint="@color/material_on_surface_emphasis_high_type"
+                android:contentDescription="@string/zoom_in" />
+
+            <ImageButton
+                android:id="@+id/location_picker_btn_zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_zoom_out"
+                app:tint="@color/material_on_surface_emphasis_high_type"
+                android:contentDescription="@string/zoom_out" />
+
+        </LinearLayout>
     </com.mapbox.mapboxsdk.maps.MapView>
 
     <Button
@@ -32,7 +70,6 @@
         android:layout_gravity="bottom"
         android:layout_margin="8dp"
         android:background="@color/primaryColor"
-        android:text="Select a location"
-        android:textColor="@android:color/white"/>
+        android:text="@string/location_picker_btn_select" />
 
 </FrameLayout>
