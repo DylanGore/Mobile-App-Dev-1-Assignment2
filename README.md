@@ -66,3 +66,6 @@ For more details on where to get the required tokens, see the [MapBox Android In
 -   [IntentService is deprecated, how do I replace it with JobIntentService?](https://stackoverflow.com/questions/62138507/intentservice-is-deprecated-how-do-i-replace-it-with-jobintentservice)
 -   [Setting Up the Search Interface](https://developer.android.com/training/search/setup)
 -   [Make Search Bar Filter Work Using Fragment & ListView In Android](https://medium.com/@royanimesh2211/make-search-bar-filter-work-using-fragment-listview-in-android-bc4ee921450d)
+-   [Retrofit](https://square.github.io/retrofit/)
+-   [Retrofit — Synchronous and Asynchronous Requests](https://futurestud.io/tutorials/retrofit-synchronous-and-asynchronous-requests)
+-   [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions)
