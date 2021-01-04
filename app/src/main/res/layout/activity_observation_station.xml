@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_observation_station"
     android:layout_width="match_parent"
@@ -104,7 +106,33 @@
         android:paddingTop="@dimen/keyline_2"
         mapbox:mapbox_cameraTargetLat="53.1424"
         mapbox:mapbox_cameraTargetLng="-7.6921"
-        mapbox:mapbox_cameraZoom="5.0">
+        mapbox:mapbox_cameraZoom="9.0">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/keyline_2"
+            android:layout_gravity="top|end">
+
+            <ImageButton
+                android:id="@+id/observation_station_btn_zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_zoom_in"
+                app:tint="@color/material_on_surface_emphasis_high_type"
+                android:contentDescription="@string/zoom_in" />
+
+            <ImageButton
+                android:id="@+id/observation_station_btn_zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_zoom_out"
+                app:tint="@color/material_on_surface_emphasis_high_type"
+                android:contentDescription="@string/zoom_out" />
+
+        </LinearLayout>
+        
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </LinearLayout>

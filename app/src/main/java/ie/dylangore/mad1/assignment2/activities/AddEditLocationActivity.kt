@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ie.dylangore.mad1.assignment2.R
 import ie.dylangore.mad1.assignment2.databinding.ActivityAddEditLocationBinding

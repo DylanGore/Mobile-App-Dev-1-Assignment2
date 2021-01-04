@@ -16,6 +16,7 @@ import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
+import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
@@ -39,10 +40,11 @@ import org.jetbrains.anko.toast
 class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var app:MainApp
-    private lateinit var binding:ActivityObservationStationBinding
+    private lateinit var binding: ActivityObservationStationBinding
     private lateinit var coordinates: LatLong
     private lateinit var station: ObservationStation.ObservationStationItem
     private lateinit var stationAsLocation: Location
+    private lateinit var mapboxMap: MapboxMap
 
     /**
      * Runs when the activity is created
@@ -149,7 +151,20 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
                         .target(LatLng(coordinates.lat, coordinates.lon))
                         .zoom(10.0).tilt(0.0).build()
                     // Pan the map to the new location
-                    mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2000);
+                    mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2000)
+
+            }
+
+            this.mapboxMap = mapboxMap
+
+            // Zoom in button
+            binding.observationStationBtnZoomIn.setOnClickListener {
+                changeMapPosition(zoom=mapboxMap.cameraPosition.zoom + 1, duration = 500)
+            }
+
+            // Zoom out button
+            binding.observationStationBtnZoomOut.setOnClickListener {
+                changeMapPosition(zoom=mapboxMap.cameraPosition.zoom - 1, duration = 500)
             }
         }
     }
@@ -186,6 +201,19 @@ class ObservationStationActivity : AppCompatActivity(), AnkoLogger {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         createLocalLocation()
+    }
+
+    /**
+     * Helper function to change the map position and zoom level
+     *
+     * @param lat the desired latitude (default: current map latitude)
+     * @param lon the desired longitude (default: current map longitude)
+     * @param zoom the desired zoom level (default: 9.0)
+     * @param duration the length of time in ms to pan the map to the new location (default: 2000)
+     */
+    private fun changeMapPosition(lat: Double = mapboxMap.cameraPosition.target.latitude, lon: Double = mapboxMap.cameraPosition.target.longitude, zoom: Double = 9.0, duration: Int = 2000){
+        val position = CameraPosition.Builder().target(LatLng(lat, lon)).zoom(zoom).tilt(0.0).build()
+        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), duration)
     }
 
     private fun createLocalLocation(){

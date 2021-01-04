@@ -3,7 +3,6 @@ package ie.dylangore.mad1.assignment1.weather
 import ie.dylangore.mad1.assignment2.helpers.RequestHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.io.File
 
 /**
  * Test the weather warnings parser

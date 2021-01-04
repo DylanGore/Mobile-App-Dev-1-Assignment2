@@ -6,7 +6,6 @@ import androidx.core.app.JobIntentService
 import ie.dylangore.mad1.assignment2.helpers.RequestHelper
 import ie.dylangore.mad1.assignment2.models.Location
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
 

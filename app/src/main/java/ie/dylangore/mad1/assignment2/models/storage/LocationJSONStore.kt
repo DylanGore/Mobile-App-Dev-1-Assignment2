@@ -8,10 +8,9 @@ import ie.dylangore.mad1.assignment2.helpers.FileHelper
 import ie.dylangore.mad1.assignment2.helpers.ValidationHelper
 import ie.dylangore.mad1.assignment2.models.Location
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.jetbrains.anko.error
+import org.jetbrains.anko.info
 import java.lang.reflect.Type
-import kotlin.collections.ArrayList
 
 /**
  * Class that manages storing location data in memory

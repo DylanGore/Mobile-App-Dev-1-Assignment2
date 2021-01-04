@@ -1,11 +1,8 @@
 package ie.dylangore.mad1.assignment2.helpers
 
-import android.content.Intent
-import android.widget.Toast
 import ie.dylangore.mad1.assignment2.api.ForecastApi
 import ie.dylangore.mad1.assignment2.api.StationApi
 import ie.dylangore.mad1.assignment2.api.WarningsApi
-import ie.dylangore.mad1.assignment2.main.MainApp
 import ie.dylangore.mad1.assignment2.models.Forecast
 import ie.dylangore.mad1.assignment2.models.ObservationStation
 import ie.dylangore.mad1.assignment2.models.Warning
