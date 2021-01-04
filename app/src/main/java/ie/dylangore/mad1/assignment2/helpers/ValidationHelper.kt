@@ -8,10 +8,10 @@ import ie.dylangore.mad1.assignment2.models.Location
 object ValidationHelper {
 
     // Validation constraints
-    private const val LATITUDE_MIN: Double = -180.0
-    private const val LATITUDE_MAX: Double = 180.0
-    private const val LONGITUDE_MIN: Double = -90.0
-    private const val LONGITUDE_MAX: Double = 90.0
+    private const val LATITUDE_MIN: Double = -90.0
+    private const val LATITUDE_MAX: Double = 90.0
+    private const val LONGITUDE_MIN: Double = -180.0
+    private const val LONGITUDE_MAX: Double = 180.0
     private const val ALTITUDE_MAX: Int = 9000
 
     /**
