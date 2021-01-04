@@ -9,4 +9,8 @@
         android:id="@+id/nav_observation_stations"
         android:icon="@drawable/ic_cloud"
         android:title="@string/title_observation_stations" />
+    <item
+        android:id="@+id/nav_warnings"
+        android:icon="@drawable/ic_warning"
+        android:title="@string/title_warnings" />
 </menu>

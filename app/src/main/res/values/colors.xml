@@ -8,4 +8,7 @@
     <color name="secondaryDarkColor">#005662</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="yellowWarning">#fdd835</color>
+    <color name="orangeWarning">#ff6f00</color>
+    <color name="redWarning">#b71c1c</color>
 </resources>

@@ -2,15 +2,45 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ie.dylangore.mad1.assignment2">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
+        android:name=".main.MainApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather">
+        <activity android:name=".activities.LocationPickerActivity" />
+        <activity android:name=".activities.ForecastDetailsActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.LocationDetailsActivity" />
+        <activity android:name=".activities.WarningActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.ObservationStationActivity"
+            android:configChanges="uiMode" />
+
+        <service
+            android:name=".services.StationRequestService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".services.ForecastRequestService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".services.WarningRequestService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name=".activities.AddEditLocationActivity"
+            android:label="@string/title_add_location" />
+        <activity
+            android:name=".activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
