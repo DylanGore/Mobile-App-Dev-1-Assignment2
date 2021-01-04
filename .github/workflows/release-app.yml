@@ -1,4 +1,4 @@
-name: Test App
+name: Test and Build App
 on: [pull_request, push, workflow_dispatch]
 jobs:
   build:
@@ -22,6 +22,13 @@ jobs:
           echo "MAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOAD_TOKEN }}" >> ~/.gradle/gradle.properties
           echo "MAPBOX_ACCESS_TOKEN=\"${{ secrets.MAPBOX_ACCESS_TOKEN }}\";" >> ~/.gradle/gradle.properties
       - name: Run unit tests
-        run: ./gradlew test
-      # - name: "Run implementation tests"
-      #   uses: vgaidarji/android-github-actions-emulator@v1.0.1
+        run: ./gradlew test --stacktrace
+      - name: "Run implementation tests"
+        uses: vgaidarji/android-github-actions-emulator@v1.0.1
+      - name: Build debug APK
+        run: bash ./gradlew assembleDebug --stacktrace
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/app-debug.apk
