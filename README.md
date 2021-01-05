@@ -4,14 +4,12 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=for-the-badge)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DylanGore/Mobile-App-Dev-1-Assignment2/Test,%20Build%20and%20Create%20Release?label=Build&style=for-the-badge)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/DylanGore/Mobile-App-Dev-1-Assignment2?label=Latest%20Release&style=for-the-badge)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DylanGore/Mobile-App-Dev-1-Assignment2/Test,%20Build%20and%20Create%20Release?label=Build&style=for-the-badge)](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/actions?query=workflow%3A%22Test%2C+Build+and+Create+Release%22)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/DylanGore/Mobile-App-Dev-1-Assignment2?label=Latest%20Release&style=for-the-badge)](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/releases/latest)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DylanGore/Mobile-App-Dev-1-Assignment2?label=Code%20Size&style=for-the-badge)
 
 ![Minimum Android Version](https://img.shields.io/badge/Minimum%20Version-8.0%20Oreo%20--%20API%20Level%2026-3DDC84?logo=android&style=for-the-badge)
 ![Target Android Version](https://img.shields.io/badge/Target%20Version-11.0%20--%20API%20Level%2030-3DDC84?logo=android&style=for-the-badge)
-
-![Build Status](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/workflows/Test,%20Build%20and%20Create%20Release/badge.svg)
 
 This is a Kotlin-based weather app for Android.
 
@@ -54,6 +52,27 @@ MAPBOX_ACCESS_TOKEN="pk.xxxxxxxxxx";
 
 For more details on where to get the required tokens, see the [MapBox Android Installation Guide](https://docs.mapbox.com/help/tutorials/first-steps-android-sdk/).
 
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://dylangore.ie"><img src="https://avatars1.githubusercontent.com/u/2760449?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dylan Gore</b></sub></a><br /><a href="https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/commits?author=DylanGore" title="Tests">⚠️</a> <a href="https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/commits?author=DylanGore" title="Code">💻</a> <a href="#maintenance-DylanGore" title="Maintenance">🚧</a> <a href="#ideas-DylanGore" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-DylanGore" title="Project Management">📆</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+
 ## Branches
 
 -   [main](https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/tree/main) - Main branch
@@ -80,23 +99,3 @@ For more details on where to get the required tokens, see the [MapBox Android In
 -   [Retrofit](https://square.github.io/retrofit/)
 -   [Retrofit — Synchronous and Asynchronous Requests](https://futurestud.io/tutorials/retrofit-synchronous-and-asynchronous-requests)
 -   [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions)
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://dylangore.ie"><img src="https://avatars1.githubusercontent.com/u/2760449?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dylan Gore</b></sub></a><br /><a href="https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/commits?author=DylanGore" title="Tests">⚠️</a> <a href="https://github.com/DylanGore/Mobile-App-Dev-1-Assignment2/commits?author=DylanGore" title="Code">💻</a> <a href="#maintenance-DylanGore" title="Maintenance">🚧</a> <a href="#ideas-DylanGore" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-DylanGore" title="Project Management">📆</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
